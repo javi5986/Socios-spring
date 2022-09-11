@@ -3,7 +3,8 @@ package sociosclub.enums;
 public enum EnumVistas {
 
 	
-	ABM("/socios/buscar");
+	ABM("/socios/abm"),
+	ALTA("socios/alta");
 
 	private String view;
 	
