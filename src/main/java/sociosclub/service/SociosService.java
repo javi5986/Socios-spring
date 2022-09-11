@@ -16,6 +16,8 @@ public class SociosService {
 	private SociosRepository repository;
 
 	public List<Socios> buscarTodos() {
+
 		return this.repository.findAll();
 	}
+	
 }

@@ -15,8 +15,11 @@ public class SociosController {
 	@Autowired
 	private SociosService sociosService;
 
-	@GetMapping("/abm") 
+	@GetMapping("/buscar") 
 	public String abm() {
+		
+		
+		
 		return EnumVistas.ABM.getView();
 	}
 			
