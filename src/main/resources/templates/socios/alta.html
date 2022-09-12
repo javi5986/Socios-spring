@@ -12,48 +12,62 @@
 	<div th:insert="navbar.html" role="navigation"></div>
 	<main>
 		<section class="container">
-			<h1>ABM Socios</h1>
-			<form class="row g-3 needs-validation" novalidate>
+			<h1>Alta Socios</h1>
+			<form 
+				class="row g-3 needs-validation" 
+				novalidate
+			 	th:object="${SOCIO}"
+			 	action="#"
+			 	th:action="@{/socio/alta}"
+			 	th:method="POST"
+			 	>
+
 				<div class="col-md-4">
 					<label for="validationCustom01" class="form-label">ID</label>
-					<input type="num" class="form-control" id="validationCustom01" value="Id" disabled>
+					<input type="num" class="form-control" 
+							id="validationCustom01" placeholder="id" 
+							disabled>
 				
 				</div>
 				<div class="col-md-4">
 					<label for="validationCustom01" class="form-label">Nombre</label>
-					<input type="text" class="form-control" id="validationCustom01" required>
+					<input type="text" class="form-control" 
+					id="validationCustom01" required
+					th:field="*{nombre}">
 					<div class="valid-feedback">
 						Looks good!
 					</div>
 				</div>
 				<div class="col-md-4">
 					<label for="validationCustom02" class="form-label">Apellido</label>
-					<input type="text" class="form-control" id="validationCustom02" required>
+					<input type="text" class="form-control" 
+							id="validationCustom02" required
+							th:field="*{apellido}">
 					<div class="valid-feedback">
 						Looks good!
 					</div>
 				</div>
 				<div class="col-md-4">
 					<label for="validationCustom02" class="form-label">Numero de documento</label>
-					<input type="num" class="form-control" id="validationCustom02" value="" required>
+					<input type="text" class="form-control" id="validationCustom02" value="" th:field="*{numerodocumento}">
 					<div class="valid-feedback">
 						Looks good!
 					</div>
 				</div>
 				<div class="col-md-4">
 					<label for="validationCustom02" class="form-label">Fecha de Nacimiento</label>
-					<input type="date" class="form-control" id="validationCustom02" value="Otto" required>
+					<input type="date" class="form-control" id="validationCustom02" th:field="*{fechanacimiento}">
 					<div class="valid-feedback">
 						Looks good!
 					</div>
 				</div>
 						<div class="col-md-4">
 					<label for="validationCustom02" class="form-label">Sexo</label>
-					<select class="form-select" id="validationCustom02" value="" required>
+					<select class="form-select" id="validationCustom02" required th:field="*{sexo}" >
 							<option selected disabled value="">Choose...</option>
-							<option>F</option>
-							<option>M</option>
-							<option>X</option>
+							<option value="F">F</option>
+							<option value="M">M</option>
+							<option value="X">X</option>
 					</select>
 					<div class="valid-feedback">
 						Looks good!
@@ -63,7 +77,7 @@
 				    <label for="validationCustomUsername" class="form-label">Email</label>
 				    <div class="input-group has-validation">
 				      <span class="input-group-text" id="inputGroupPrepend">@</span>
-				      <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+				      <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" th:field="*{correoelectronico}">
 				      <div class="invalid-feedback">
 				        Please choose a username.
 					  </div>
@@ -71,7 +85,7 @@
 				</div>
 				<div class="col-md-4">
 					<label for="validationCustom02" class="form-label">Telefono</label>
-					<input type="num" class="form-control" id="validationCustom02" value="" required>
+					<input type="text" class="form-control" id="validationCustom02" value=""th:field="*{telefono}">
 					<div class="valid-feedback">
 						Looks good!
 					</div>
@@ -79,25 +93,25 @@
 				
 				<div class="col-md-9">
 					<label for="validationCustom03" class="form-label">Direccion</label>
-					<input type="text" class="form-control" id="validationCustom03" required>
+					<input type="text" class="form-control" id="validationCustom03" th:field="*{direccion}" >
 					<div class="invalid-feedback">
 						Please provide a valid city.
 					</div>
 				</div>
 				<div class="col-md-6">
 					<label for="validationCustom03" class="form-label">Localidad</label>
-					<input type="text" class="form-control" id="validationCustom03" required>
+					<input type="text" class="form-control" id="validationCustom03" th:field="*{localidad}" >
 					<div class="invalid-feedback">
 						Please provide a valid city.
 					</div>
 				</div>
 				<div class="col-md-3">
 					<label for="validationCustom04" class="form-label">Provincia</label>
-					<select class="form-select" id="validationCustom04" required>
+					<select class="form-select" id="validationCustom04" th:field="*{provincia}">
 						<option selected disabled value="">Choose...</option>
-						<option>SANTA FE</option>
-						<option>CORDOBA</option>
-						<option>SANTIAGO DEL ESTERO</option>
+						<option value="Santa Fe">SANTA FE</option>
+						<option value="Cordoba">CORDOBA</option>
+						<option value="Santiago del Estero">SANTIAGO DEL ESTERO</option>
 					</select>
 					<div class="invalid-feedback">
 						Please select a valid state.
@@ -105,16 +119,24 @@
 				</div>
 				<div class="col-md-3">
 					<label for="validationCustom05" class="form-label">Codigo Postal</label>
-					<input type="text" class="form-control" id="validationCustom05" required>
+					<input type="text" class="form-control" id="validationCustom05" th:field="*{codigopostal}">
 					<div class="invalid-feedback">
 						Please provide a valid zip.
 					</div>
 				</div>
-				  <div class="col-12">
+				  <div class="col-1">
 				    <div class="form-check">
-				      <input class="form-check-input" type="checkbox" value="">
+				      <input class="form-check-input" type="checkbox" value="NO" required th:field="*{habilitado}">
 				      <label class="form-check-label" for="invalidCheck">
 				        ACTIVO
+				      </label>
+				    </div>
+				  </div>
+				  <div class="col-1">
+				    <div class="form-check">
+				      <input class="form-check-input" type="checkbox" value="1" required th:field="*{titular}" >
+				      <label class="form-check-label" for="invalidCheck">
+				        TITULAR
 				      </label>
 				    </div>
 				  </div>
