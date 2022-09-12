@@ -63,7 +63,7 @@ public class Socios {
 	private String provincia;
 	
 	@Column(nullable = false, length = 2,  name ="habilitado")
-	private String habilitado;
+	private Long habilitado;
 	
 	@Column(nullable = false, length = 10,  name ="titular")
 	private Long titular;
@@ -167,11 +167,11 @@ public class Socios {
 		this.provincia = provincia;
 	}
 
-	public String getHabilitado() {
+	public Long getHabilitado() {
 		return habilitado;
 	}
 
-	public void setHabilitado(String habilitado) {
+	public void setHabilitado(Long habilitado) {
 		this.habilitado = habilitado;
 	}
 
@@ -194,7 +194,7 @@ public class Socios {
 	
 	public Socios(Long id, String nombre, String apellido, String numerodocumento, Date fechanacimiento, String sexo,
 			String telefono, String direccion, String correoelectronico, String localidad, String codigopostal,
-			String provincia, String habilitado, Long titular, Long idtitular) {
+			String provincia, Long habilitado, Long titular, Long idtitular) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -215,7 +215,7 @@ public class Socios {
 
 	public Socios(String nombre, String apellido, String numerodocumento, Date fechanacimiento, String sexo,
 			String telefono, String direccion, String correoelectronico, String localidad, String codigopostal,
-			String provincia, String habilitado, Long titular, Long idtitular) {
+			String provincia, Long habilitado, Long titular, Long idtitular) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
