@@ -1,6 +1,7 @@
 package sociosclub.domain;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,22 +34,27 @@ public class Socios {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
 	
+	@NotEmpty
 	@Column(nullable = false,length = 50,name="nombre")
 	private String nombre;
 	
+	@NotEmpty
 	@Column(nullable = false,length = 50, name="apellido")
 	private String apellido;
 	
+	@NotEmpty
 	@Column(nullable = true,length = 12, unique = true, name ="numerodocumento")
 	private String numerodocumento;
 	
+	@DateTimeFormat(pattern ="yyyy-MM-dd")
 	@Column(nullable = true,  name ="fechanacimiento")
 	private Date fechanacimiento;
 	
+	@NotEmpty
 	@Column(nullable = false, length = 1,  name ="sexo")
 	private String sexo;
 	
-	@Column(nullable = true, length = 10,  name ="telefono")
+	@Column(nullable = true, length = 15,  name ="telefono")
 	private String telefono;
 	
 	@Column(nullable = true, length = 60,  name ="direccion")
@@ -61,11 +71,14 @@ public class Socios {
 	
 	@Column(nullable = true, length = 50,  name ="provincia")
 	private String provincia;
-	
-	@Column(nullable = false, length = 2,  name ="habilitado")
+		
+	@NotNull
+	@Column(nullable = false, length = 1,  name ="habilitado")
 	private Long habilitado;
 	
-	@Column(nullable = false, length = 10,  name ="titular")
+	
+	@NotNull
+	@Column(nullable = false, length = 1,  name ="titular")
 	private Long titular;
 	
 	@Column(nullable = true, length = 10,  name ="idtitular")

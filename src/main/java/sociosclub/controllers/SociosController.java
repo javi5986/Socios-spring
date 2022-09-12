@@ -1,13 +1,21 @@
 package sociosclub.controllers;
 
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import sociosclub.domain.Socios;
 import sociosclub.enums.EnumVistas;
 import sociosclub.service.SociosService;
 
@@ -23,10 +31,6 @@ public class SociosController {
 		return EnumVistas.ABM.getView();
 	}
 	
-	@GetMapping("/alta") 
-	public String alta() {
-		return EnumVistas.ALTA.getView();
-	}
 		
 	@GetMapping("/listados") 
 	public String listados() {
@@ -40,4 +44,31 @@ public class SociosController {
 		Integer a = 1;
 		return "socios";
 	}
+
+	public ModelAndView alta() {
+		Socios socio = new Socios();
+		
+		ModelAndView model = new ModelAndView(EnumVistas.ALTA.getView());
+		model.addObject("SOCIO", socio);
+		
+		return model;
+	}
+	
+	
+	@PostMapping("/alta")
+	public String alta(
+		@Valid	
+		@ModelAttribute(name="SOCIO") Socios socio,
+		BindingResult result
+		){
+		
+			if(result.hasErrors()) {
+				return EnumVistas.ALTA.getView();
+			}
+			
+			else{
+				this.sociosService.alta(socio);
+				return EnumVistas.ABM.getView();
+			}	
+		}
 }
