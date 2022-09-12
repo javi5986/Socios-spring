@@ -44,7 +44,8 @@ public class SociosController {
 		Integer a = 1;
 		return "socios";
 	}
-
+	
+	@GetMapping("/alta")
 	public ModelAndView alta() {
 		Socios socio = new Socios();
 		
