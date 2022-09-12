@@ -1,5 +1,6 @@
 package sociosclub.controllers;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class SociosController {
 	
 	@PostMapping("/alta")
 	public String alta(
-		@Valid
+		@Valid	
 		@ModelAttribute(name="SOCIO") Socios socio,
 		BindingResult result
 		){

@@ -14,7 +14,7 @@
 		<section class="container">
 			<h1>Alta Socios</h1>
 			<form 
-				class="row g-3 needs-validation" 
+				th:class="${#fields.hasErrors()} ? 'row g-3 needs-validation was-validated' : 'row g-3 needs-validation'"
 				novalidate
 			 	th:object="${SOCIO}"
 			 	action="#"
@@ -25,121 +25,157 @@
 				<div class="col-md-4">
 					<label for="validationCustom01" class="form-label">ID</label>
 					<input type="num" class="form-control" 
-							id="validationCustom01" placeholder="id" 
+							id="id" placeholder="" 
 							disabled>
+				</div>
 				
-				</div>
 				<div class="col-md-4">
-					<label for="validationCustom01" class="form-label">Nombre</label>
+					<label for="validationCustom01" class="form-label">Nombre (*)</label>
 					<input type="text" class="form-control" 
-					id="validationCustom01" required
-					th:field="*{nombre}">
+							id="nombre" 
+							required
+							maxlength="50"
+							th:field="*{nombre}">
 					<div class="valid-feedback">
-						Looks good!
+						Ok!
 					</div>
-				</div>
+					
+			    	   <div th:if="${#fields.hasErrors('nombre')}"
+				     		th:errors="*{nombre}"
+				     		class="invalid-feedback"> 
+			    	</div>
+				</div>		
+				
 				<div class="col-md-4">
-					<label for="validationCustom02" class="form-label">Apellido</label>
+					<label for="validationCustom02" class="form-label">Apellido (*)</label>
 					<input type="text" class="form-control" 
-							id="validationCustom02" required
+							id="apellido" required
+							maxlength="50"
 							th:field="*{apellido}">
 					<div class="valid-feedback">
-						Looks good!
+						Ok!
 					</div>
+					
+			    	   <div th:if="${#fields.hasErrors('apellido')}"
+				     		th:errors="*{apellido}"
+				     		class="invalid-feedback"> 
+			    		</div>
 				</div>
 				<div class="col-md-4">
-					<label for="validationCustom02" class="form-label">Numero de documento</label>
-					<input type="text" class="form-control" id="validationCustom02" value="" th:field="*{numerodocumento}">
+					<label for="validationCustom02" class="form-label">Numero de documento (*)</label>
+					<input type="text" class="form-control" 
+						id="numerodocumento" 
+						maxlength="12"
+						required
+						th:field="*{numerodocumento}">
 					<div class="valid-feedback">
-						Looks good!
+						Ok!
 					</div>
+					<div th:if="${#fields.hasErrors('numerodocumento')}"
+				     		th:errors="*{numerodocumento}"
+				     		class="invalid-feedback"> 
+			    	</div>
 				</div>
 				<div class="col-md-4">
 					<label for="validationCustom02" class="form-label">Fecha de Nacimiento</label>
-					<input type="date" class="form-control" id="validationCustom02" th:field="*{fechanacimiento}">
+					<input type="date" class="form-control" 
+						id="fechaNacimiento" 
+						th:field="*{fechanacimiento}">
 					<div class="valid-feedback">
-						Looks good!
+						Ok!
 					</div>
 				</div>
-						<div class="col-md-4">
-					<label for="validationCustom02" class="form-label">Sexo</label>
-					<select class="form-select" id="validationCustom02" required th:field="*{sexo}" >
-							<option selected disabled value="">Choose...</option>
+				<div class="col-md-4">
+					<label for="validationCustom02" class="form-label">Sexo (*)</label>
+					<select class="form-select" 
+							id="sexo" 
+							required th:field="*{sexo}" >
 							<option value="F">F</option>
 							<option value="M">M</option>
 							<option value="X">X</option>
 					</select>
 					<div class="valid-feedback">
-						Looks good!
+						Ok!
 					</div>
 				</div>
 				<div class="col-md-4">
 				    <label for="validationCustomUsername" class="form-label">Email</label>
 				    <div class="input-group has-validation">
 				      <span class="input-group-text" id="inputGroupPrepend">@</span>
-				      <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" th:field="*{correoelectronico}">
+				      <input type="text" class="form-control" 
+				     	 id="correo" aria-describedby="inputGroupPrepend" 
+				     	 th:field="*{correoelectronico}">
 				      <div class="invalid-feedback">
-				        Please choose a username.
+				        Ingrese el correo.
 					  </div>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<label for="validationCustom02" class="form-label">Telefono</label>
-					<input type="text" class="form-control" id="validationCustom02" value=""th:field="*{telefono}">
+					<input type="text" class="form-control" 
+							id="telefono" 
+							maxlength="15"
+							value="" th:field="*{telefono}">
 					<div class="valid-feedback">
-						Looks good!
+						Ok!
 					</div>
 				</div>
 				
 				<div class="col-md-9">
 					<label for="validationCustom03" class="form-label">Direccion</label>
-					<input type="text" class="form-control" id="validationCustom03" th:field="*{direccion}" >
-					<div class="invalid-feedback">
-						Please provide a valid city.
-					</div>
+					<input type="text" class="form-control" 
+							id="direccion" 
+							maxlength="60"
+							th:field="*{direccion}" >
+		
 				</div>
 				<div class="col-md-6">
 					<label for="validationCustom03" class="form-label">Localidad</label>
-					<input type="text" class="form-control" id="validationCustom03" th:field="*{localidad}" >
-					<div class="invalid-feedback">
-						Please provide a valid city.
-					</div>
+					<input type="text" class="form-control" 
+						id="localidad" 
+						th:field="*{localidad}" >
+	
 				</div>
 				<div class="col-md-3">
 					<label for="validationCustom04" class="form-label">Provincia</label>
-					<select class="form-select" id="validationCustom04" th:field="*{provincia}">
-						<option selected disabled value="">Choose...</option>
+					<select class="form-select" 
+							id="provincia" 
+							th:field="*{provincia}">
 						<option value="Santa Fe">SANTA FE</option>
 						<option value="Cordoba">CORDOBA</option>
 						<option value="Santiago del Estero">SANTIAGO DEL ESTERO</option>
 					</select>
-					<div class="invalid-feedback">
-						Please select a valid state.
-					</div>
+	
 				</div>
 				<div class="col-md-3">
 					<label for="validationCustom05" class="form-label">Codigo Postal</label>
-					<input type="text" class="form-control" id="validationCustom05" th:field="*{codigopostal}">
-					<div class="invalid-feedback">
-						Please provide a valid zip.
-					</div>
+					<input type="text" class="form-control" 
+						id="codigoPostal" 
+						maxlength="10"
+						th:field="*{codigopostal}">
+		
 				</div>
-				  <div class="col-1">
-				    <div class="form-check">
-				      <input class="form-check-input" type="checkbox" value="NO" required th:field="*{habilitado}">
-				      <label class="form-check-label" for="invalidCheck">
-				        ACTIVO
-				      </label>
-				    </div>
-				  </div>
-				  <div class="col-1">
-				    <div class="form-check">
-				      <input class="form-check-input" type="checkbox" value="1" required th:field="*{titular}" >
-				      <label class="form-check-label" for="invalidCheck">
-				        TITULAR
-				      </label>
-				    </div>
-				  </div>
+				
+				<div class="col-md-3">
+					<label for="validationCustom04" class="form-label">Socio activo</label>
+					<select class="form-select" 
+							id="habilitado" 
+							th:field="*{habilitado}">
+						<option value="1">SI</option>
+						<option value="0">NO</option>
+					</select>	
+				</div>
+				
+				<div class="col-md-3">
+					<label for="validationCustom04" class="form-label">Socio Titular</label>
+					<select class="form-select" 
+							id="titular" 
+							th:field="*{titular}">
+						<option value="1">SI</option>
+						<option value="0">NO</option>
+					</select>	
+				</div>
+				 
 				<div class="col-12">
 					<button class="btn btn-primary" type="submit">ALTA</button>
 				</div>
@@ -147,6 +183,8 @@
 		</section>
 	</main>
 </body>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
