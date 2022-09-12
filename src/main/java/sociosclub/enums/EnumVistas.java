@@ -4,7 +4,8 @@ public enum EnumVistas {
 
 	
 	ABM("/socios/abm"),
-	ALTA("socios/alta");
+	ALTA("socios/alta"),
+	LISTADOS("/socios/listados");
 
 	private String view;
 	
