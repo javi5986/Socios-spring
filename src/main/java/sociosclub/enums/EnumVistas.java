@@ -5,7 +5,11 @@ public enum EnumVistas {
 	
 	ABM("/socios/abm"),
 	ALTA("socios/alta"),
+	EDIT("socios/edit"), 
+	LIST("socios/list"),
+	REDIRECT("redirect:/socios/abm");
 	LISTADOS("/socios/listados");
+
 
 	private String view;
 	

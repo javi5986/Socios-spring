@@ -1,6 +1,7 @@
 package sociosclub.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -26,7 +27,25 @@ public class SociosService {
 	public void alta(Socios socio) {
 		
 		this.repository.save(socio);
+
+	}
+
+
+	public Socios buscarPorId(Long id) {
+		Optional<Socios> socios = this.repository.findById(id);
+		
+		if(socios.isPresent()) {
+			return socios.get();
+		} else {
+			return null;
+		}
+	}
+
+
+	public void eliminar(Long id) {
+		this.repository.deleteById(id);
 		
 	}
+
 	
 }

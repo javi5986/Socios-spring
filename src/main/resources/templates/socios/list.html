@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaft.org">
+
+<head>
+	<!--incluir themes-->
+	<link rel="stylesheet" th:href="@{/css/boostrap/themes/Slate/bootstrap.css}">
+
+<script>
+	guardarId=(id)=> {
+		document.getElementById("idSocio").value=id	
+	}
+
+</script>
+
+</head>
+
+<body>
+	<div th:insert="navbar.html" role="navigation"></div>
+	<main>
+		<div class="container-fluid">
+			<h1>Socios</h1>
+			<table class=table>
+				<!--titulos de la tabla-->
+				<tr>
+					<th>ID</th>
+					<th>NOMBRE</th>
+					<th>APELLIDO</th>
+					<th>NUMERO DOCUMENTO</th>
+				</tr>
+				<!-- rows -->
+				<tr th:each="socio : ${SOCIOS}">
+					<td th:text="${socio.id}"></td>
+					<td th:text="${socio.nombre}"></td>
+					<td th:text="${socio.apellido}"></td>
+					<td th:text="${socio.numerodocumento}"></td>
+					<td>
+						<a class= "btn btn-info" 
+							th:href="@{'/socio/edit/'+ ${socio.id}}">Editar</a>
+						<a class="btn btn-danger" 
+							data-bs-toggle="modal" 
+							data-bs-target="#exampleModal"
+							th:attr="onclick='guardarId(' + ${socio.id} +')'">Eliminar</a>
+					</td>
+				</tr>
+			</table>
+		<div>
+	<main>
+	
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Eliminar Socio</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        ¿Esta seguro que quiere eliminar el socio?
+	      </div>
+	      <div class="modal-footer">
+	      	<form id="frmDelete"
+	      		action="#"
+	      		th:method="GET"
+	      		th:action="@{/socio/baja}">
+	      		<input type="hidden" id="idSocio" name="id">
+	        	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+	        	<button type="submit" class="btn btn-primary">Aceptar</button>
+	      	</form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+	</script>
+
+</html>

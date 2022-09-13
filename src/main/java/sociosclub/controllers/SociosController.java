@@ -72,4 +72,55 @@ public class SociosController {
 				return EnumVistas.ABM.getView();
 			}	
 		}
+    
+    @RequestMapping("/edit/{id}") 
+	public String edit(
+			@PathVariable(name="id", required=true) Long id,
+			Model model
+			) {
+	
+		Socios socio = this.sociosService.buscarPorId(id);	
+		model.addAttribute("SOCIO", socio);
+		return EnumVistas.EDIT.getView();
+	}
+	
+	
+	@PostMapping("/edit")
+	public String edit(
+		@Valid	
+		@ModelAttribute(name="SOCIO") Socios socio,
+		BindingResult result
+		){
+		
+			if(result.hasErrors()) {
+				return EnumVistas.EDIT.getView();
+			}
+			
+			else{
+				this.sociosService.alta(socio);
+				return EnumVistas.ABM.getView();
+			}	
+		}
+	
+	@GetMapping("/baja")	
+	public String baja(
+			@RequestParam(name="id", required = true) Long id,
+			Model model
+			) {
+	
+		this.sociosService.eliminar(id);
+		
+		return EnumVistas.ABM.getView();
+}
+
+@GetMapping("/list") 
+	public String list(
+			Model model
+			) {
+		
+		List<Socios> socios= this.sociosService.buscarTodos(); 
+		model.addAttribute("SOCIOS", socios);
+		return EnumVistas.LIST.getView();
+	}
+    
 }
