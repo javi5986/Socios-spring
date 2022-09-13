@@ -7,7 +7,7 @@ public enum EnumVistas {
 	ALTA("socios/alta"),
 	EDIT("socios/edit"), 
 	LIST("socios/list"),
-	REDIRECT("redirect:/socios/abm");
+	REDIRECT("redirect:/socios/abm"),
 	LISTADOS("/socios/listados");
 
 
