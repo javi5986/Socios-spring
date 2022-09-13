@@ -8,6 +8,8 @@ public enum EnumVistas {
 	EDIT("socios/edit"), 
 	LIST("socios/list"),
 	REDIRECT("redirect:/socios/abm");
+	LISTADOS("/socios/listados");
+
 
 	private String view;
 	

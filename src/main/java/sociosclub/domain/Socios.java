@@ -71,8 +71,7 @@ public class Socios {
 	
 	@Column(nullable = true, length = 50,  name ="provincia")
 	private String provincia;
-	
-	
+		
 	@NotNull
 	@Column(nullable = false, length = 1,  name ="habilitado")
 	private Long habilitado;
