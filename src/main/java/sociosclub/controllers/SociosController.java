@@ -40,12 +40,19 @@ public class SociosController {
 		return EnumVistas.LISTADOS.getView();
 	}
 	
-	@PostMapping("/listados/{busqueda}") 
+	@PostMapping("/listados") 
 	public String listados1(
-			@PathVariable(name="busqueda",required = true ) String busqueda,			
-			Model model) {
-		Integer a = 1;
-		return "socios";
+			@RequestParam(name="palabraBusqueda",required = true ) String palabraBusqueda,
+			@RequestParam(name="parametro",required = true ) String parametro,
+			@RequestParam(name="tipoSocio",required = true ) String tipoSocio,
+			@RequestParam(name="estadoSocio",required = true ) String estadoSocio,
+			Model model
+			) {
+		
+	
+		model.addAttribute("SOCIOS", this.sociosService.buscarTodos());
+		
+		return EnumVistas.LISTADOS.getView();
 	}
 	
 	@GetMapping("/alta")
