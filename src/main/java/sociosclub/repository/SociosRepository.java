@@ -14,32 +14,10 @@ import sociosclub.domain.Socios;
  */
 public interface SociosRepository extends JpaRepository<Socios, Long>{ //EX DAO
 	
-	List<Socios> findAllByApellidoContainingOrderByApellidoAscNombre(String palabraBusqueda);
-	
-	List<Socios> findAllByNombreContainingOrderByApellidoAscNombre(String palabraBusqueda);
-	
-	List<Socios> findAllByNumerodocumentoContainingOrderByApellidoAscNombre(String palabraBusqueda);
+	List<Socios> findByApellidoContainingAndTitularNotLikeAndHabilitadoNotLikeOrderByApellidoAscNombre(String palabraBusqueda, Long tipoSocio, Long estadoSocio);
 
-	List<Socios> findByApellidoContainingAndTitularAndHabilitadoOrderByApellidoAscNombre(String palabraBusqueda, Long tipoSocio, Long estadoSocio);
+	List<Socios> findByNombreContainingAndTitularNotLikeAndHabilitadoNotLikeOrderByApellidoAscNombre(String palabraBusqueda, Long tipoSocio, Long estadoSocio);
 
-	List<Socios> findByNombreContainingAndTitularAndHabilitadoOrderByApellidoAscNombre(String palabraBusqueda, Long tipoSocio, Long estadoSocio);
-
-	List<Socios> findByNumerodocumentoContainingAndTitularAndHabilitadoOrderByApellidoAscNombre(String palabraBusqueda, Long tipoSocio, Long estadoSocio);
-
-	List<Socios> findByApellidoContainingAndHabilitadoOrderByApellidoAscNombre(String palabraBusqueda, Long estadoSocio);
-
-	List<Socios> findByNombreContainingAndHabilitadoOrderByApellidoAscNombre(String palabraBusqueda, Long estadoSocio);
-
-	List<Socios> findByNumerodocumentoContainingAndHabilitadoOrderByApellidoAscNombre(String palabraBusqueda,	Long estadoSocio);
-
-	List<Socios> findByApellidoContainingAndTitularOrderByApellidoAscNombre(String palabraBusqueda, Long tipoSocio);
-
-	List<Socios> findByNombreContainingAndTitularOrderByApellidoAscNombre(String palabraBusqueda, Long tipoSocio);
-
-	List<Socios> findByNumerodocumentoContainingAndTitularOrderByApellidoAscNombre(String palabraBusqueda, Long tipoSocio);
-	// numerodocumento
-	
-
-	
+	List<Socios> findByNumerodocumentoContainingAndTitularNotLikeAndHabilitadoNotLikeOrderByApellidoAscNombre(String palabraBusqueda, Long tipoSocio, Long estadoSocio);
 	
 }

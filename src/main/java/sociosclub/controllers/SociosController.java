@@ -75,7 +75,6 @@ public class SociosController {
 			Model model
 			) {
 		
-		if(tipoSocio>=0 && estadoSocio>=0) {
 			switch (parametro) {
 			case "apellido":
 				model.addAttribute("SOCIOS", this.sociosService.findAllByApellido(palabraBusqueda,tipoSocio,estadoSocio));
@@ -89,55 +88,7 @@ public class SociosController {
 			default:
 				break;
 			}
-			
-		}else if(tipoSocio==-1 && estadoSocio>=0) {
-			switch (parametro) {
-			case "apellido":
-				model.addAttribute("SOCIOS", this.sociosService.findAllByApellidoAndEstado(palabraBusqueda,estadoSocio));				
-				break;
-			case "nombre":
-				model.addAttribute("SOCIOS", this.sociosService.findAllByNombreAndEstado(palabraBusqueda,estadoSocio));				
-				break;	
-			case "numerodocumento":
-				model.addAttribute("SOCIOS", this.sociosService.findAllByDocumentoAndEstado(palabraBusqueda,estadoSocio));				
-				break;	
-			default:
-				break;
-			}
-		}else  if(estadoSocio==-1 && tipoSocio>=0) {
-			switch (parametro) {
-			case "apellido":
-				model.addAttribute("SOCIOS", this.sociosService.findAllByApellidoAndTipoSocio(palabraBusqueda,tipoSocio));				
-				break;
-			case "nombre":
-				model.addAttribute("SOCIOS", this.sociosService.findAllByNombreAndTipoSocio(palabraBusqueda,tipoSocio));				
-				break;	
-			case "numerodocumento":
-				model.addAttribute("SOCIOS", this.sociosService.findAllByDocumentoAndTipoSocio(palabraBusqueda,tipoSocio));				
-				break;	
-			default:
-				break;
-			}
-			
-		}else {
-			switch (parametro) {
-			case "apellido":
-				model.addAttribute("SOCIOS", this.sociosService.findAllByApellido(palabraBusqueda));				
-				break;
-			case "nombre":
-				model.addAttribute("SOCIOS", this.sociosService.findAllByNombre(palabraBusqueda));				
-				break;	
-			case "numerodocumento":
-				model.addAttribute("SOCIOS", this.sociosService.findAllByDocumento(palabraBusqueda));				
-				break;	
-			default:
-				break;
-			}
-		}
-		
-		//model.addAttribute("SOCIOS", this.sociosService.findByParams(palabraBusqueda));
 	
-		
 		return EnumVistas.LISTADOS.getView();
 	}
 	
