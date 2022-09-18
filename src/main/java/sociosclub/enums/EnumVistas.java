@@ -4,9 +4,9 @@ public enum EnumVistas {
 
 	
 	ABM("/socios/abm"),
-	ALTA("socios/alta"),
-	EDIT("socios/edit"), 
-	LIST("socios/list"),
+	ALTA("/socios/alta"),
+	EDIT("/socios/edit"), 
+	LIST("/socios/list"),
 	REDIRECT("redirect:/socios/abm"),
 	LISTADOS("/socios/listados");
 
@@ -18,7 +18,7 @@ public enum EnumVistas {
 	}
 
 	public String getView() {
-		return view;
+		return this.view;
 	}
 	
 }

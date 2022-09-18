@@ -16,7 +16,8 @@
 			<form class="row g-3 needs-validation" th:method="POST" th:action="@{/socio/listados}" novalidate>
 				<div class="col-md-4">
 					<label for="validationCustom01" class="form-label">Ingrese su busqueda</label>
-					<input type="text" class="form-control" name="palabraBusqueda" id="values" placeholder="Escriba aqui" required>
+					<input type="text" class="form-control" name="palabraBusqueda" id="textoIngresado"
+						placeholder="Escriba aqui" required>
 					<div class="valid-feedback">
 						Looks good!
 					</div>
@@ -24,25 +25,25 @@
 				<div class="col-md-2">
 					<label for="validationCustom01" class="form-label">Parametro de busqueda</label>
 					<select class="form-select" name="parametro" id="values" required>
-						<option value="Apellido">Apellido</option>
-						<option value="Nombre">Nombre</option>
-						<option value="DNI">DNI</option>
+						<option value="apellido">Apellido</option>
+						<option value="nombre">Nombre</option>
+						<option value="numerodocumento">DNI</option>
 					</select>
 				</div>
 				<div class="col-md-2">
 					<label for="validationCustom01" class="form-label">Titular ?</label>
-					<select class="form-select" name="tipoSocio" id="values" required>
-						<option value="Todos">Todos</option>
-						<option value="Titulares">Titulares</option>
-						<option value="Parcipantes">Participantes</option>
+					<select type="number" class="form-select" name="tipoSocio" id="values" required>
+						<option value="-1">Todos</option>
+						<option value="1">Titulares</option>
+						<option value="0">Participantes</option>
 					</select>
 				</div>
 				<div class="col-md-2">
 					<label for="validationCustom01" class="form-label">Habilitado ?</label>
-					<select class="form-select" name="estadoSocio" id="values" required>
-						<option>Todos</option>
-						<option>Activos</option>
-						<option>Inactivos</option>
+					<select type="number" class="form-select" name="estadoSocio" id="values" required>
+						<option value="-1">Todos</option>
+						<option value="1">Activos</optionvalue="1">
+						<option value="0">Inactivos</option>
 					</select>
 				</div>
 				<div class="col-md-2 pt-4">
@@ -51,8 +52,8 @@
 			</form>
 		</section>
 		<section class="container mt-5">
-			<table class="table table-striped">
-				<!--titulos de la tabla-->
+			<table class="table table-striped" id="tabla">
+				
 				<tr>
 					<th>ID</th>
 					<th>Apellido</th>
@@ -60,10 +61,10 @@
 					<th>Documento</th>
 					<th>Titular</th>
 					<th>Habilitado</th>
-					<th></th>
 				</tr>
 				<!-- rows -->
 				<tr th:each="socio : ${SOCIOS}">
+
 					<td th:text="${socio.id}"></td>
 					<td th:text="${socio.apellido}"></td>
 					<td th:text="${socio.nombre}"></td>
@@ -71,15 +72,12 @@
 					<td th:text="${socio.titular}"></td>
 					<td th:text="${socio.habilitado}"></td>
 					<td>
-						<!-- Button trigger modal -->
-						<!--						<button type="button" 
-								class="btn btn-danger" 
-								data-bs-toggle="modal" 
-								data-bs-target="#exampleModal">-->
-						<!--						  Eliminar-->
-						</button>
 					</td>
 				</tr>
+				<form th:method="POST" th:action="@{/socio/pdf}" th:modelAttribute="${SOCIOS}">
+					<input class="btn btn-prumary" type="submit" value="Imprimir" />
+				</form>
+
 			</table>
 		</section>
 

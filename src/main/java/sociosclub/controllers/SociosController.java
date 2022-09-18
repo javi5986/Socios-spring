@@ -1,6 +1,10 @@
 package sociosclub.controllers;
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -8,7 +12,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,41 +19,124 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import sociosclub.domain.Socios;
 import sociosclub.enums.EnumVistas;
 import sociosclub.service.SociosService;
 
 @Controller
 @RequestMapping("/socio")
+@SessionAttributes("SOCIOS")
 public class SociosController {
 
 	@Autowired
 	private SociosService sociosService;
-
+		
 	@GetMapping("/abm") 
 	public String abm() {
 		return EnumVistas.ABM.getView();
 	}
 	
+	@PostMapping("/pdf")
+	public String generarReporte(
+			@ModelAttribute(name="SOCIOS") List<Socios> socios) throws FileNotFoundException, JRException {
 		
+		//JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(socios);
+		//JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("src/main/resources/Coffee.jrxml"));
+		//HashMap<String, Object> map = new HashMap<>();
+		//JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
+		//JasperExportManager.exportReportToPdfFile(report,"Reporte.pdf");
+		
+		return EnumVistas.LISTADOS.getView();
+	}
+	
 	@GetMapping("/listados") 
 	public String listados() {
 		return EnumVistas.LISTADOS.getView();
 	}
 	
+
+	
 	@PostMapping("/listados") 
-	public String listados1(
+	public String listados(
 			@RequestParam(name="palabraBusqueda",required = true ) String palabraBusqueda,
 			@RequestParam(name="parametro",required = true ) String parametro,
-			@RequestParam(name="tipoSocio",required = true ) String tipoSocio,
-			@RequestParam(name="estadoSocio",required = true ) String estadoSocio,
+			@RequestParam(name="tipoSocio",required = true ) Long tipoSocio,
+			@RequestParam(name="estadoSocio",required = true ) Long estadoSocio,
 			Model model
 			) {
 		
+		if(tipoSocio>=0 && estadoSocio>=0) {
+			switch (parametro) {
+			case "apellido":
+				model.addAttribute("SOCIOS", this.sociosService.findAllByApellido(palabraBusqueda,tipoSocio,estadoSocio));
+				break;
+			case "nombre":
+				model.addAttribute("SOCIOS", this.sociosService.findAllByNombre(palabraBusqueda,tipoSocio,estadoSocio));				
+				break;	
+			case "numerodocumento":
+				model.addAttribute("SOCIOS", this.sociosService.findAllByDocumento(palabraBusqueda,tipoSocio,estadoSocio));				
+				break;	
+			default:
+				break;
+			}
+			
+		}else if(tipoSocio==-1 && estadoSocio>=0) {
+			switch (parametro) {
+			case "apellido":
+				model.addAttribute("SOCIOS", this.sociosService.findAllByApellidoAndEstado(palabraBusqueda,estadoSocio));				
+				break;
+			case "nombre":
+				model.addAttribute("SOCIOS", this.sociosService.findAllByNombreAndEstado(palabraBusqueda,estadoSocio));				
+				break;	
+			case "numerodocumento":
+				model.addAttribute("SOCIOS", this.sociosService.findAllByDocumentoAndEstado(palabraBusqueda,estadoSocio));				
+				break;	
+			default:
+				break;
+			}
+		}else  if(estadoSocio==-1 && tipoSocio>=0) {
+			switch (parametro) {
+			case "apellido":
+				model.addAttribute("SOCIOS", this.sociosService.findAllByApellidoAndTipoSocio(palabraBusqueda,tipoSocio));				
+				break;
+			case "nombre":
+				model.addAttribute("SOCIOS", this.sociosService.findAllByNombreAndTipoSocio(palabraBusqueda,tipoSocio));				
+				break;	
+			case "numerodocumento":
+				model.addAttribute("SOCIOS", this.sociosService.findAllByDocumentoAndTipoSocio(palabraBusqueda,tipoSocio));				
+				break;	
+			default:
+				break;
+			}
+			
+		}else {
+			switch (parametro) {
+			case "apellido":
+				model.addAttribute("SOCIOS", this.sociosService.findAllByApellido(palabraBusqueda));				
+				break;
+			case "nombre":
+				model.addAttribute("SOCIOS", this.sociosService.findAllByNombre(palabraBusqueda));				
+				break;	
+			case "numerodocumento":
+				model.addAttribute("SOCIOS", this.sociosService.findAllByDocumento(palabraBusqueda));				
+				break;	
+			default:
+				break;
+			}
+		}
+		
+		//model.addAttribute("SOCIOS", this.sociosService.findByParams(palabraBusqueda));
 	
-		model.addAttribute("SOCIOS", this.sociosService.buscarTodos());
 		
 		return EnumVistas.LISTADOS.getView();
 	}
