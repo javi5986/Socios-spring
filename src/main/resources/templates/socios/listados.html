@@ -16,34 +16,34 @@
 			<form class="row g-3 needs-validation" th:method="POST" th:action="@{/socio/listados}" novalidate>
 				<div class="col-md-4">
 					<label for="validationCustom01" class="form-label">Ingrese su busqueda</label>
-					<input type="text" class="form-control" name="palabraBusqueda" id="textoIngresado"
-						placeholder="Escriba aqui" required>
+					<input type="text" class="form-control" name="inputText" id="inputText"
+						placeholder="Escriba aqui" th:value="${INPUTTEXT}" required>
 					<div class="valid-feedback">
 						Looks good!
 					</div>
 				</div>
 				<div class="col-md-2">
 					<label for="validationCustom01" class="form-label">Parametro de busqueda</label>
-					<select class="form-select" name="parametro" id="values" required>
-						<option value="apellido">Apellido</option>
-						<option value="nombre">Nombre</option>
-						<option value="numerodocumento">DNI</option>
+					<select class="form-select" name="busquedaPor" id="busquedaPor" required>
+						<option value="apellido" th:selected="apellido == ${BUSQUEDAPOR}">Apellido</option>
+						<option value="nombre" th:selected="nombre == ${BUSQUEDAPOR}">Nombre</option>
+						<option value="numerodocumento" th:selected="numerodocumento == ${BUSQUEDAPOR}">DNI</option>
 					</select>
 				</div>
 				<div class="col-md-2">
 					<label for="validationCustom01" class="form-label">Titular ?</label>
-					<select type="number" class="form-select" name="tipoSocio" id="values" required>
-						<option value="-1">Todos</option>
-						<option value="0">Titulares</option>
-						<option value="1">Participantes</option>
+					<select type="number" class="form-select" name="titular" id="titular" required>
+						<option value="-1" th:selected="-1 == ${TITULAR}">Todos</option>
+						<option value="0" th:selected="0 == ${TITULAR}">Titulares</option>
+						<option value="1" th:selected="1 == ${TITULAR}">Participantes</option>
 					</select>
 				</div>
 				<div class="col-md-2">
 					<label for="validationCustom01" class="form-label">Habilitado ?</label>
-					<select type="number" class="form-select" name="estadoSocio" id="values" required>
-						<option value="-1">Todos</option>
-						<option value="0">Activos</optionvalue="1">
-						<option value="1">Inactivos</option>
+					<select type="number" class="form-select" name="habilitado" id="habilitado" required>
+						<option value="-1" th:selected="-1 == ${HABILITADO}">Todos</option>
+						<option value="0" th:selected="0 == ${HABILITADO}">Activos</optionvalue="1">
+						<option value="1" th:selected="1 == ${HABILITADO}">Inactivos</option>
 					</select>
 				</div>
 				<div class="col-md-2 pt-4">
@@ -74,10 +74,11 @@
 					<td>
 					</td>
 				</tr>
-				<form th:method="POST" th:action="@{/socio/pdf}" th:modelAttribute="${SOCIOS}">
-					<input class="btn btn-prumary" type="submit" value="Imprimir" />
-				</form>
-
+				<div>
+					<form th:method="POST" th:action="@{/pdf}" th:modelAttribute="${SOCIOS}" >
+						<input class="btn btn-prumary" th:disabled="${#lists.isEmpty(SOCIOS)}" type="submit" value="Exportar a PDF"/>
+					</form>
+				</div>
 			</table>
 		</section>
 
