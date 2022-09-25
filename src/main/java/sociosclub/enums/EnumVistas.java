@@ -3,10 +3,10 @@ package sociosclub.enums;
 public enum EnumVistas {
 
 	
-	ABM("/socios/abm"),
-	ALTA("/socios/alta"),
-	EDIT("/socios/edit"), 
-	LIST("/socios/list"),
+	ABM("socios/abm"),
+	ALTA("socios/alta"),
+	EDIT("socios/edit"), 
+	LIST("socios/list"),
 	REDIRECT("redirect:/socios/abm"),
 	LISTADOS("/socios/listados"),
 	REDIRECT_LISTADOS("redirect:/socio/listados"),;
