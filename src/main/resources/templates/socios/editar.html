@@ -1,0 +1,205 @@
+<!-- listar los cupones del sitio -->
+<!--namespaces-->
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaft.org">
+
+<head>
+	<!--incluir themes-->
+	<link rel="stylesheet" th:href="@{/css/boostrap/themes/Slate/bootstrap.css}">
+</head>
+
+<body>
+	<div th:insert="navbar.html" role="navigation"></div>
+	<main>
+	
+		<section class="container">
+		<div th:class="${SUCCESS}?'alert alert-success alert-dismissible fade show':'alert alert-success alert-dismissible fade visually-hidden'" role="alert">
+  			<strong>Modificado con exito</strong> 
+  			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		
+			<h1>Editar Socio</h1>
+			<div>
+					<a class="btn btn-primary" th:href="@{/socio/buscar}">VOLVER</a>
+				</div>
+			<form 
+				th:class="${#fields.hasErrors()} ? 'row g-3 needs-validation was-validated' : 'row g-3 needs-validation'"
+				novalidate
+			 	th:object="${SOCIO}"
+			 	action="#"
+			 	th:action="@{/socio/editar}"
+			 	th:method="POST"
+			 	>
+ 				<input type="hidden" th:field="*{id}">
+				<div class="col-md-4">
+					<label for="validationCustom01" class="form-label">ID</label>
+					<input type="number" class="form-control" 
+							id="id" 
+							th:field="*{id}"
+							disabled>
+				</div>
+				
+				<div class="col-md-4">
+					<label for="validationCustom01" class="form-label">Nombre (*)</label>
+					<input type="text" class="form-control" 
+							id="nombre" 
+							required
+							maxlength="50"
+							th:field="*{nombre}">
+					<div class="valid-feedback">
+						Ok!
+					</div>
+					
+			    	   <div th:if="${#fields.hasErrors('nombre')}"
+				     		th:errors="*{nombre}"
+				     		class="invalid-feedback"> 
+			    	</div>
+				</div>		
+				
+				<div class="col-md-4">
+					<label for="validationCustom02" class="form-label">Apellido (*)</label>
+					<input type="text" class="form-control" 
+							id="apellido" required
+							maxlength="50"
+							th:field="*{apellido}">
+					<div class="valid-feedback">
+						Ok!
+					</div>
+					
+			    	   <div th:if="${#fields.hasErrors('apellido')}"
+				     		th:errors="*{apellido}"
+				     		class="invalid-feedback"> 
+			    		</div>
+				</div>
+				<div class="col-md-4">
+					<label for="validationCustom02" class="form-label">Numero de documento (*)</label>
+					<input type="text" class="form-control" 
+						id="numerodocumento" 
+						maxlength="12"
+						required
+						th:field="*{numerodocumento}">
+					<div class="valid-feedback">
+						Ok!
+					</div>
+					<div th:if="${#fields.hasErrors('numerodocumento')}"
+				     		th:errors="*{numerodocumento}"
+				     		class="invalid-feedback"> 
+			    	</div>
+				</div>
+				<div class="col-md-4">
+					<label for="validationCustom02" class="form-label">Fecha de Nacimiento</label>
+					<input type="date" class="form-control" 
+						id="fechaNacimiento" 
+						th:field="*{fechanacimiento}">
+					<div class="valid-feedback">
+						Ok!
+					</div>
+				</div>
+				<div class="col-md-4">
+					<label for="validationCustom02" class="form-label">Sexo (*)</label>
+					<select class="form-select" 
+							id="sexo" 
+							required th:field="*{sexo}" >
+							<option value="F" th:selected="F == ${sexo}">F</option>
+							<option value="M" th:selected="M == ${sexo}">M</option>
+							<option value="X" th:selected="X == ${sexo}">X</option>
+					</select>
+					<div class="valid-feedback">
+						Ok!
+					</div>
+				</div>
+				<div class="col-md-4">
+				    <label for="validationCustomUsername" class="form-label">Email</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend">@</span>
+				      <input type="text" class="form-control" 
+				     	 id="correo" aria-describedby="inputGroupPrepend" 
+				     	 th:field="*{correoelectronico}">
+				      <div class="invalid-feedback">
+				        Ingrese el correo.
+					  </div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<label for="validationCustom02" class="form-label">Telefono</label>
+					<input type="text" class="form-control" 
+							id="telefono" 
+							maxlength="15"
+							value="" th:field="*{telefono}">
+					<div class="valid-feedback">
+						Ok!
+					</div>
+				</div>
+				
+				<div class="col-md-9">
+					<label for="validationCustom03" class="form-label">Direccion</label>
+					<input type="text" class="form-control" 
+							id="direccion" 
+							maxlength="60"
+							th:field="*{direccion}" >
+		
+				</div>
+				<div class="col-md-6">
+					<label for="validationCustom03" class="form-label">Localidad</label>
+					<input type="text" class="form-control" 
+						id="localidad" 
+						th:field="*{localidad}" >
+	
+				</div>
+				<div class="col-md-3">
+					<label for="validationCustom04" class="form-label">Provincia</label>
+					<select class="form-select" 
+							id="provincia" 
+							th:field="*{provincia}">
+						<option value="Santa Fe" th:selected="('Santa fe') == ${provincia}">SANTA FE</option>
+						<option value="Cordoba" th:selected="('Cordoba') == ${provincia}">CORDOBA</option>
+						<option value="Santiago del Estero" th:selected="('Santiago del Estero') == ${provincia}">SANTIAGO DEL ESTERO</option>
+					</select>
+	
+				</div>
+				<div class="col-md-3">
+					<label for="validationCustom05" class="form-label">Codigo Postal</label>
+					<input type="text" class="form-control" 
+						id="codigoPostal" 
+						maxlength="10"
+						th:field="*{codigopostal}">
+		
+				</div>
+				
+				<div class="col-md-3">
+					<label for="validationCustom04" class="form-label">Socio activo</label>
+					<select class="form-select" 
+							id="habilitado" 
+							th:field="*{habilitado}">
+						<option value="1" th:selected="1 == ${habilitado}">SI</option>
+						<option value="0" th:selected="0 == ${habilitado}">NO</option>
+					</select>	
+				</div>
+				
+				<div class="col-md-3">
+					<label for="validationCustom04" class="form-label">Socio Titular</label>
+					<select class="form-select" 
+							id="titular" 
+							th:field="*{titular}">
+						<option value="1" th:selected="1 == ${titular}">SI</option>
+						<option value="0" th:selected="0 == ${titular}">NO</option>
+					</select>	
+				</div>
+				 
+				<div class="col-12">
+					<button class="btn btn-primary" type="submit">MODIFICAR</button>					
+				</div>
+			</form>
+			
+		</section>
+	</main>
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+<script>
+		document.getElementById("inputText").focus();
+</script>
+</html>

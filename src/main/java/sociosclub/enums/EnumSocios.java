@@ -1,20 +1,19 @@
 package sociosclub.enums;
 
-public enum EnumVistas {
+public enum EnumSocios {
 
 	
-	ABM("socios/abm"),
-	ALTA("socios/alta"),
-	EDIT("socios/edit"), 
-	LIST("socios/list"),
+	ALTA("/socios/alta"),
+	EDITAR("/socios/editar"), 
 	REDIRECT("redirect:/socios/abm"),
 	LISTADOS("/socios/listados"),
-	REDIRECT_LISTADOS("redirect:/socio/listados"),;
+	REDIRECT_LISTADOS("redirect:/socio/listados"),
+	BUSCARSOCIO("/socios/buscar");
 
 
 	private String view;
 	
-	private EnumVistas(String view) {
+	private EnumSocios(String view) {
 		this.view = view;			
 	}
 

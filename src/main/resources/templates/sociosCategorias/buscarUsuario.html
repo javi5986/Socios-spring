@@ -1,4 +1,3 @@
-<!-- listar los cupones del sitio -->
 <!--namespaces-->
 <!DOCTYPE html>
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaft.org">
@@ -12,18 +11,14 @@
 	<div th:insert="navbar.html" role="navigation"></div>
 	<main>
 		<section class="container">
-			<h1>Listados de Socios</h1>
-			<div class="visually-hidden" id="success-alert">
-  				<strong>Reporte generado! </strong> Archivo guardado en Escritorio
-			</div>
-			<form class="row g-3 needs-validation" th:method="POST" th:action="@{/socio/listados}" novalidate>
+			<h1>Buscar Socio</h1>
+			<form class="row g-3 needs-validation" th:method="POST" th:action="@{/sociosCategorias/buscarUsuario}"
+				novalidate>
 				<div class="col-md-4">
 					<label for="validationCustom01" class="form-label">Ingrese su busqueda</label>
-					<input type="text" class="form-control" name="inputText" id="inputText"
-						placeholder="Escriba aqui" th:value="${INPUTTEXT}" required>
-					<div class="valid-feedback">
-						Looks good!
-					</div>
+					<input type="text" class="form-control" name="inputText" id="inputText" placeholder="Escriba aqui"
+						th:value="${INPUTTEXT}" required>
+
 				</div>
 				<div class="col-md-2">
 					<label for="validationCustom01" class="form-label">Parametro de busqueda</label>
@@ -44,9 +39,7 @@
 				<div class="col-md-2">
 					<label for="validationCustom01" class="form-label">Habilitado ?</label>
 					<select type="number" class="form-select" name="habilitado" id="habilitado" required>
-						<option value="-1" th:selected="-1 == ${HABILITADO}">Todos</option>
 						<option value="0" th:selected="0 == ${HABILITADO}">Activos</optionvalue="1">
-						<option value="1" th:selected="1 == ${HABILITADO}">Inactivos</option>
 					</select>
 				</div>
 				<div class="col-md-2 pt-4">
@@ -54,12 +47,9 @@
 				</div>
 			</form>
 		</section>
-		
-		
-		
 		<section class="container mt-5">
 			<table class="table table-striped" id="tabla">
-				
+
 				<tr>
 					<th>ID</th>
 					<th>Apellido</th>
@@ -67,6 +57,7 @@
 					<th>Documento</th>
 					<th>Titular</th>
 					<th>Habilitado</th>
+					<th>Accion</th>
 				</tr>
 				<!-- rows -->
 				<tr th:each="socio : ${SOCIOS}">
@@ -78,54 +69,22 @@
 					<td th:text="${socio.titular}"></td>
 					<td th:text="${socio.habilitado}"></td>
 					<td>
+						<a class="btn btn-success btn-sm"
+							th:href="@{'/sociosCategorias/seleccionarCategoria/'+${socio.id}}">Seleccionar
+						</a>
 					</td>
 				</tr>
-				<div>
-						
-					<button class="btn btn-primary btn-md" 
-					th:onclick="imprimir()" th:disabled="${#lists.isEmpty(SOCIOS)}">Exportar a PDF</button>
-				</div>
+
 			</table>
 		</section>
+
 	</main>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
-<script th:inline="javascript">
-/*<![CDATA[*/
-	function imprimir() {
-		
-    	const list = /*[[${SOCIOS}]]*/ 'default';
-    	  
-        const urlController = '/listadoSocios';
-        
-        const dataToSend = JSON.stringify(list);
-        
-       	fetch(urlController, {
-        	method: 'POST',
-        	headers: {"Content-Type": "application/json"},
-        	body: dataToSend})
-        .then(function (response) {
-	
-			if (response.status == 200) {
-				
-				document.getElementById("success-alert").className = "alert alert-success";
-				setTimeout(function(){
-					document.getElementById("success-alert").className = "visually-hidden";
-					}, 3000);
-				}
-            });
-            
-    }
-    	
-     //}
-/*]]>*/
-		
-</script>
 <script>
-		
-		document.getElementById("inputText").focus();		
+		document.getElementById("inputText").focus();
 </script>
 </html>

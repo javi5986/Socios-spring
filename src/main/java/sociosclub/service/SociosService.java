@@ -22,9 +22,9 @@ public class SociosService {
 	}
 	
 
-	public void alta(Socios socio) {
+	public Socios alta(Socios socio) {
 		
-		this.repository.save(socio);
+		return this.repository.save(socio);
 
 	}
 
@@ -59,6 +59,5 @@ public class SociosService {
 	public List<Socios> findAllByDocumento(String palabraBusqueda, Long tipoSocio, Long estadoSocio) {
 		return this.repository.findByNumerodocumentoContainingAndTitularNotLikeAndHabilitadoNotLikeOrderByApellidoAscNombre(palabraBusqueda,tipoSocio,estadoSocio);
 	}
-
 	
 }

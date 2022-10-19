@@ -1,0 +1,92 @@
+<!-- listar los cupones del sitio -->
+<!--namespaces-->
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaft.org">
+
+<head>
+	<!--incluir themes-->
+	<link rel="stylesheet" th:href="@{/css/boostrap/themes/Slate/bootstrap.css}">
+
+</head>
+
+<body>
+	<div th:insert="navbar.html" role="navigation"></div>
+	<main>
+		<section class="container">
+<!--		<div th:class="${DELETE}?'alert alert-danger alert-dismissible fade show':'alert alert-success alert-dismissible fade visually-hidden'" role="alert">-->
+<!--  			<strong>Eliminado con exito</strong> -->
+<!--  			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
+<!--		</div>-->
+			<h1>Categorias</h1>
+			<section class="col-md-7">
+				<a class="btn btn-primary btn-md" 
+				th:href="@{/categorias/alta}">Alta</a>
+				
+				<table class="table table-striped" id="tabla">
+
+					<tr>
+						<th>ID</th>
+						<th>Categoria</th>
+						<th>Monto</th>
+						<th>Acciones</th>
+					</tr>
+					<!-- rows -->
+					<tr th:each="categorias : ${CATEGORIAS}">
+
+						<td th:text="${categorias.id}"></td>
+						<td th:text="${categorias.nombre}"></td>
+						<td th:text="${categorias.monto}"></td>
+						<td>
+							<a class="btn btn-success btn-sm" 
+								th:href="@{'/categorias/editar/'+${categorias.id}}">Editar</a>
+							<a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"
+								th:attr="onclick='guardarId(' + ${categorias.id} +')'">Eliminar</a>
+						</td>
+					</tr>
+
+				</table>
+			</section>
+	</main>
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Eliminar Categoria</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					ATENCION: Este proceso no puede revertise. Si elimina una categoria, todos los socios que la tengan asociada tambien perderan esta condicion.
+					  
+				</div>
+				<div class="modal-footer">
+					<form id="frmDelete" action="#" th:method="GET" th:action="@{/categorias/eliminar}">
+						<input type="hidden" id="idCategorias" name="id">
+						<button type="submit" class="btn btn-primary">Aceptar</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+<script>
+	function guardarId(id) {
+		document.getElementById("idCategorias").value = id
+		//elementoEliminado()
+	}
+</script>
+<script th:inline="javascript">
+/*<![CDATA[*/
+	//function elementoEliminado(){
+    const listInicial = /*[[${CATEGORIAS}]]*/ 'default';
+    const otra = listInicial.length;
+    console.log(otra.length);
+	//}
+/*]]>*/
+</script>
+</html>
