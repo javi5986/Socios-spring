@@ -24,7 +24,7 @@ public class SociosService {
 
 	public Socios alta(Socios socio) {
 		
-		return this.repository.save(socio);
+			return this.repository.save(socio);
 
 	}
 

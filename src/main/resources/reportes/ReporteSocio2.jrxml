@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteSocio" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fe0d9067-5144-426f-9eb0-94eebf820ce4">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<subDataset name="Dataset1" uuid="c6cf59d1-2d3f-468c-b72d-2042744d8dec">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<filterExpression><![CDATA[$P{CollectionParams}]]></filterExpression>
+	</subDataset>
+	<parameter name="CollectionParams" class="net.sf.jasperreports.engine.data.JRBeanArrayDataSource"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="apellido" class="java.lang.String"/>
+	<field name="numerodocumento" class="java.lang.String"/>
+	<field name="fechanacimiento" class="java.sql.Date"/>
+	<field name="sexo" class="java.lang.String"/>
+	<field name="telefono" class="java.lang.String"/>
+	<field name="direccion" class="java.lang.String"/>
+	<field name="correoelectronico" class="java.lang.String"/>
+	<field name="localidad" class="java.lang.String"/>
+	<field name="codigopostal" class="java.lang.String"/>
+	<field name="provincia" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="30" y="30" width="100" height="30" uuid="4b969825-461e-434e-9f9f-6d3149025653">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3a06f216-7afd-40c1-abfb-3960d2f00779"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="30" width="100" height="30" uuid="b63a844c-362a-4464-85c2-454cd8daea85"/>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="166" y="82" width="100" height="30" uuid="63471e89-f70f-4ba4-b158-8cc1d0b6f7db"/>
+				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

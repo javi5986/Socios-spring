@@ -17,6 +17,14 @@
 				<strong>Guardado con exito</strong>
 				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 			</div>
+			<div th:class="${DUPLICATE}?'alert alert-danger alert-dismissible fade show':'alert alert-success alert-dismissible fade visually-hidden'"
+				role="alert">
+				<strong>Nº DOCUMENTO DUPLICADO </strong> El numero de documento que intenta guardar ya existe
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+			<div class="visually-hidden" id="success-alert">
+  				<strong>Reporte generado! </strong> Archivo guardado en Escritorio
+			</div>
 			<h1>Alta Socios</h1>
 			<form
 				th:class="${#fields.hasErrors()} ? 'row g-3 needs-validation was-validated' : 'row needs-validation g-3'"
@@ -140,6 +148,8 @@
 
 				<div class="col-12">
 					<button id="btn-alta" class="btn btn-primary" type="submit">ALTA</button>
+					<a id="btn-imprimir" class="btn btn-primary btn-md" 
+					th:onclick="imprimir()" >IMPRIMIR</a>
 										<a class="btn btn-primary" th:href="@{/}">VOLVER</a>
 				</div>
 			</form>
@@ -151,16 +161,52 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
+	
 <script th:inline="javascript">
 	/*<![CDATA[*/
 	const socio = /*[[${SOCIO.id}]]*/ 'default';
 	if (socio != null) {
 		document.getElementById("btn-alta").className += " disabled";
+		// TODO - LUEGO DEL ALTA DISABLED INPUTS		
+	}
+	if (socio == null) {
+		document.getElementById("btn-imprimir").className += " disabled";
 	}
 	/*]]>*/
 </script>
 <script>
 		document.getElementById("nombre").focus();
+</script>
+<script th:inline="javascript">
+/*<![CDATA[*/
+	function imprimir() {
+		
+    	const list = /*[[${SOCIO}]]*/ 'default';
+    	  
+        const urlController = '/imprimirSocio';
+        
+        const dataToSend = JSON.stringify(list);
+        
+       	fetch(urlController, {
+        	method: 'POST',
+        	headers: {"Content-Type": "application/json"},
+        	body: dataToSend})
+        .then(function (response) {
+	
+			if (response.status == 200) {
+				
+				document.getElementById("success-alert").className = "alert alert-success";
+				setTimeout(function(){
+					document.getElementById("success-alert").className = "visually-hidden";
+					}, 3000);
+				}
+            });
+            
+    }
+    	
+     //}
+/*]]>*/
+		
 </script>
 
 </html>

@@ -16,6 +16,11 @@
   			<strong>Guardado con exito</strong> 
   			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		</div>
+		<div th:class="${DUPLICATE}?'alert alert-danger alert-dismissible fade show':'alert alert-success alert-dismissible fade visually-hidden'"
+				role="alert">
+				<strong>NOMBRE DE CATEGORIA DUPLICADO </strong> La categoria que intenta guardar ya existe
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
 			
 			<h1>Alta Categorias</h1>
 			<form 

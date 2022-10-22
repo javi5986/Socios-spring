@@ -91,5 +91,6 @@ public class Socios {
 		joinColumns = @JoinColumn(name="id_socios"),
 		inverseJoinColumns = @JoinColumn(name="id_categorias"))
 	private Set<Categorias> categorias;
+	
 
 }

@@ -2,23 +2,18 @@ package sociosclub.controllers;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.itextpdf.text.DocumentException;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -33,14 +28,14 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import sociosclub.domain.Socios;
 
 @RestController
-//@SessionAttributes("SOCIOS")
 public class ReportesController {
 
 	private final String pathReporte ="src/main/resources/reportes/";
 
 	@SuppressWarnings("rawtypes")
-	@PostMapping(value = "/listadoSocios", consumes = "application/json")
-	public ResponseEntity imprimir(@RequestBody List<Socios> listSocios) throws JRException, IOException {
+	@PostMapping(value = "/imprimirListadoSocios", consumes = "application/json")
+	public ResponseEntity imprimirListadoSocios(
+			@RequestBody List<Socios> listSocios) throws JRException, IOException {
 
 		String nombreReporte = "ListadoSocios";
 		
@@ -51,9 +46,29 @@ public class ReportesController {
 		return ResponseEntity.ok().build();
 		
 	}
+	
+	@SuppressWarnings("rawtypes")
+	@PostMapping(value = "/imprimirSocio", consumes = "application/json")
+	public ResponseEntity imprimirSocio(
+			@RequestBody Socios socio) throws JRException, IOException {
+
+		String nombreReporte = "ReporteSocio";
+		
+		List<Socios> listToSend = new ArrayList<>();
+		listToSend.add(socio);
+		
+		JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listToSend);
+		
+		generarPdf(nombreReporte,itemsJRBean);
+
+		return ResponseEntity.ok().build();
+		
+	}
+	
 
 	private void generarPdf(String nombreReporte, JRBeanCollectionDataSource itemsJRBean ) throws JRException, IOException {
 
+		
 		HashMap<String, Object> parameters = new HashMap<>();
 
 		parameters.put("CollectionParams", itemsJRBean);

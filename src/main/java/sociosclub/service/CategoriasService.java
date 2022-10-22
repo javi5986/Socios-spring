@@ -18,7 +18,7 @@ public class CategoriasService {
 
 	public List<Categorias> findAll() {
 		
-		return this.repository.findAll();
+		return this.repository.findAllByOrderByNombreAsc();
 	}
 
 	public void eliminar(Long id) {

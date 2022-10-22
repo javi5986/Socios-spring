@@ -3,9 +3,9 @@ package sociosclub.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
-
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import sociosclub.domain.Socios;
@@ -25,7 +24,6 @@ import sociosclub.service.SociosService;
 
 @Controller
 @RequestMapping("/socio")
-//@SessionAttributes("SOCIOS")
 public class SociosController {
 
 	@Autowired
@@ -71,15 +69,20 @@ public class SociosController {
 			BindingResult result) {
 
 		ModelAndView model = new ModelAndView(EnumSocios.ALTA.getView());
-		
+		Socios socioNew = null;
 		if (!result.hasErrors()) {
-			
-			Socios socioNew = this.sociosService.alta(socio);
-			model.addObject("SOCIO", socioNew);
-			model.addObject("SUCCESS", true);
+			try {
+				 socioNew = this.sociosService.alta(socio);
+				 model.addObject("SOCIO", socioNew);
+				 model.addObject("SUCCESS", true);
+			}catch (DataIntegrityViolationException e) {
+				if(e.getCause() instanceof ConstraintViolationException){
+					model.addObject("DUPLICATE", true);					
+				}
+			}
 		}
-
 		return model;
+
 	}
 
 	@GetMapping("/buscar")

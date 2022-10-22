@@ -12,7 +12,7 @@ import sociosclub.domain.Socios;
  * T es la entidad sobre la cual voy a trabajar(Entity)
  * ID: es el tipo de datos de la id del Entity
  */
-public interface SociosRepository extends JpaRepository<Socios, Long>{ //EX DAO
+public interface SociosRepository extends JpaRepository<Socios, Long> { //EX DAO
 	
 	List<Socios> findByApellidoContainingAndTitularNotLikeAndHabilitadoNotLikeOrderByApellidoAscNombre(String palabraBusqueda, Long tipoSocio, Long estadoSocio);
 

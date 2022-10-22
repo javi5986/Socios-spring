@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import sociosclub.domain.Categorias;
 import sociosclub.domain.Socios;
@@ -29,7 +28,7 @@ public class SociosCategoriasController {
 	
 	@Autowired
 	private SociosService sociosService;
-	
+		
 	@GetMapping("/buscarUsuario")
 	public String buscarUsuario() {
 	
@@ -41,7 +40,8 @@ public class SociosCategoriasController {
 			@RequestParam(name = "inputText", required = true) String inputText,
 			@RequestParam(name = "busquedaPor", required = true) String busquedaPor,
 			@RequestParam(name = "titular", required = true) Long titular,
-			@RequestParam(name = "habilitado", required = true) Long habilitado, Model model
+			@RequestParam(name = "habilitado", required = true) Long habilitado,
+			Model model
 			) {
 		
 		busquedaPorParametros(inputText, busquedaPor, titular, habilitado, model);
@@ -87,7 +87,7 @@ public class SociosCategoriasController {
 		model.addAttribute("HABILITADO", habilitado);
 	}
 	
-	@GetMapping("/eliminarCategoria/{idSocio}/{idCategoria}") 
+	@GetMapping("/eliminarCategoria/Socio={idSocio}&Categoria={idCategoria}") 
 	public String eliminarCategoria(
 			@PathVariable(name="idSocio",required = true ) Long idSocio,
 			@PathVariable(name="idCategoria",required = true ) Long idCategoria,
@@ -107,7 +107,7 @@ public class SociosCategoriasController {
 		return EnumSociosCategorias.REDIRECT_SELECCIONARCATEGORIA.getView()+"/"+idSocio;
 	}
 		
-	@GetMapping("/agregarCategoria/{idSocio}/{idCategoria}") 
+	@GetMapping("/agregarCategoria/Socio={idSocio}&Categoria={idCategoria}") 
 	public String agregarCategoria(
 			@PathVariable(name="idSocio",required = true ) Long idSocio,
 			@PathVariable(name="idCategoria",required = true ) Long idCategoria,

@@ -50,7 +50,7 @@
 					<tr th:each="categoriassocio : ${SOCIO.categorias}">
 						<td th:text="${categoriassocio.nombre}"></td>
 						<td th:text="${categoriassocio.monto}"></td>
-						<td><a class="btn btn-danger btn-sm" th:href="@{'/sociosCategorias/eliminarCategoria/'+${SOCIO.id}+'/'+${categoriassocio.id}}">Eliminar</a></td>
+						<td><a class="btn btn-danger btn-sm" th:href="@{'/sociosCategorias/eliminarCategoria/Socio='+${SOCIO.id}+'&Categoria='+${categoriassocio.id}}">Eliminar</a></td>
 					</tr>
 
 				</table>
@@ -74,7 +74,7 @@
 						<td th:text="${categorias.nombre}"></td>
 						<td th:text="${categorias.monto}"></td>
 						<td>
-							<a th:id="${categorias.id}"	 class="btn btn-success btn-sm" th:href="@{'/sociosCategorias/agregarCategoria/'+${SOCIO.id}+'/'+${categorias.id}}">Agregar</a>
+							<a th:id="${categorias.id}"	 class="btn btn-success btn-sm" th:href="@{'/sociosCategorias/agregarCategoria/Socio='+${SOCIO.id}+'&Categoria='+${categorias.id}}">Agregar</a>
 						</td>
 					</tr>
 

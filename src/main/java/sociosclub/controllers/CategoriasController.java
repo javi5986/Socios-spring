@@ -2,7 +2,9 @@ package sociosclub.controllers;
 
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,7 +43,6 @@ public class CategoriasController {
 			Model model) {
 
 		this.categoriasService.eliminar(id);
-		//model.addAttribute("DELETE", true);
 		return EnumCategorias.REDIRECT_INDEX.getView();
 	}
 	
@@ -69,9 +70,15 @@ public class CategoriasController {
 			return model;	
 		}
 		
-		Categorias newCategoria  = this.categoriasService.crear(categoria);
-		model.addObject("CREATE", true);
-		model.addObject("CATEGORIA",newCategoria);
+		try {
+			Categorias newCategoria  = this.categoriasService.crear(categoria);
+			model.addObject("CREATE", true);
+			model.addObject("CATEGORIA",newCategoria);
+		}catch (DataIntegrityViolationException e) {
+			if(e.getCause() instanceof ConstraintViolationException){
+				model.addObject("DUPLICATE", true);					
+			}
+		}
 		return model;
 	}
 	

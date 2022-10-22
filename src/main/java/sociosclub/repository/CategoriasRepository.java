@@ -1,5 +1,7 @@
 package sociosclub.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +14,5 @@ import sociosclub.domain.Categorias;
  */
 public interface CategoriasRepository extends JpaRepository<Categorias, Long>{
 
-	
+	List<Categorias> findAllByOrderByNombreAsc();
 }
