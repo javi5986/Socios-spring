@@ -1,0 +1,253 @@
+<!-- listar los cupones del sitio -->
+<!--namespaces-->
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaft.org">
+
+<head>
+	<!--incluir themes-->
+	<link rel="stylesheet" th:href="@{/css/boostrap/themes/Slate/bootstrap.css}">
+</head>
+
+<body>
+	<div th:insert="navbar.html" role="navigation"></div>
+	<main>
+		<section class="container">
+		<div class="col-md-12">
+			<h1>Cuotas: Generar un periodo</h1>
+		</div>
+			<div class="visually-hidden" id="success-alert">
+  				<strong>Reporte generado! </strong> Archivo guardado en Escritorio			
+			</div>
+			<div th:class="${NOENCONTRADO}?'alert alert-danger alert-dismissible fade show':'alert alert-success alert-dismissible fade visually-hidden'"
+				role="alert">
+				<strong>No hay resultados para la busqueda realizada</strong>
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		</section>
+		<section class="container">
+				<form class="row g-3 needs-validation" 
+				style="display:inline-block"
+				th:action="@{/cuotas/generarPeriodo}" 
+				th:method="POST">
+					<div class="col-md-8">
+						<label for="validationCustom01" class="form-label">ID</label>
+						<input type="number"
+						onfocus="limpiar(0)" 
+						class="form-control" 
+						name="id"
+						id="id" 
+						th:value="${id}">
+					</div>
+				</form>
+				<form class="row g-3 needs-validation" 
+				style="display:inline-block; margin-right: 10px;"
+				th:action="@{/cuotas/generarPeriodo}" 
+				th:method="POST">
+					<div class="col-md-12">
+						<label for="validationCustom01" class="form-label">Apellido</label>
+						<input type="text" 
+						onfocus="limpiar(1)"
+						class="form-control" 
+						name="apellido"
+						id="apellido" 
+						th:value="${apellido}">
+					</div>
+				</form>
+				<form class="row g-3 needs-validation" 
+				style="display:inline-block; margin-right: 10px;"
+				th:action="@{/cuotas/generarPeriodo}" 
+				th:method="POST">
+					<div class="col-md-12">
+						<label for="validationCustom01" class="form-label">Nombre</label>
+						<input type="text" 
+						onfocus="limpiar(2)"
+						class="form-control" 
+						name="nombre"
+						id="nombre" 
+						th:value="${nombre}">
+					</div>
+				</form>
+				<form class="row g-3 needs-validation" 
+				style="display:inline-block; margin-right: 10px;"
+				th:action="@{/cuotas/generarPeriodo}" 
+				th:method="POST">
+					<div class="col-md-12">
+						<label for="validationCustom01" class="form-label">Documento</label>
+						<input type="number" 
+						onfocus="limpiar(3)"
+						class="form-control" 
+						name="numerodocumento"
+						id="numerodocumento" 
+						th:value="${numerodocumento}">
+					</div>
+				</form>
+		</section>
+	</main>
+	<br>
+	<section class="container">
+		<div class="col-md-12">
+			<h5> Datos del Socio </h5>
+				<table class="table table-striped" id="tabla">
+				
+				<tr>
+					<th>ID</th>
+					<th>Apellido</th>
+					<th>Nombre</th>
+					<th>Documento</th>
+				</tr>
+				<!-- rows -->
+				<tr>
+					<td th:text="${SOCIO.id}"></td>
+					<td th:text="${SOCIO.apellido}"></td>
+					<td th:text="${SOCIO.nombre}"></td>
+					<td th:text="${SOCIO.numerodocumento}"></td>	
+				</tr>
+			</table>
+		</div>
+	</section>
+	<section class="d-flex justify-content-around">
+			
+		<div class="p-3 bd-highlight">
+			<h5> Categorias </h5>
+			<table class="table table-striped" id="tabla">
+				
+				<tr>
+					<th>Nombre</th>
+					<th>Monto</th>
+				</tr>
+				<!-- rows -->
+				<tr th:each="categorias : ${CATEGORIAS}">
+					<td th:text="${categorias.nombre}"></td>
+					<td th:text="${categorias.monto}"></td>
+				</tr>
+			</table>
+			</div>
+			
+		<div class="p-3 bd-highlight">
+			<h5> Periodos </h5>
+			<table class="table table-striped" id="tabla">
+				
+				<tr>
+					<th>MES/AÑO</th>
+					<th>IMPORTE</th>
+					<th>FECHA PAGO</th>
+				</tr>
+				<!-- rows -->
+				<tr th:each="cuotas : ${CUOTAS}">
+					<td th:text="${cuotas.periodo}"></td>
+					<td th:text="${cuotas.monto}"></td>
+					<td th:text="${cuotas.fechaCobro}"></td>
+				</tr>
+			</table>
+			</div>
+		</section>
+		
+	<!-- Modal -->
+<div class="modal fade modal-lg" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Seleccionar Socio</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body modal-dialog-scrollable">
+        <section class="container mt-5">
+			<table class="table table-striped" id="tabla">
+				
+				<tr>
+					<th>ID</th>
+					<th>Apellido</th>
+					<th>Nombre</th>
+					<th>Documento</th>
+					<th>Titular</th>
+					<th>Habilitado</th>
+					<th></th>
+				</tr>
+				<!-- rows -->
+				<tr th:each="socio : ${SOCIOS}">
+
+					<td th:text="${socio.id}"></td>
+					<td th:text="${socio.apellido}"></td>
+					<td th:text="${socio.nombre}"></td>
+					<td th:text="${socio.numerodocumento}"></td>
+					<td th:text="${socio.titular}"></td>
+					<td th:text="${socio.habilitado}"></td>
+					<td>
+						<form class="row g-3 needs-validation" 
+						style="display:inline-block"
+						th:action="@{/cuotas/generarPeriodo}" 
+						th:method="POST">
+						<div class="col-md-8">
+						<input hidden type="number"
+						class="form-control" 
+						name="id"
+						id="id" 
+						th:value="${socio.id}">
+						<button id="btn-alta" class="btn btn-success btn-sm" type="submit">SELECCIONAR</button>
+						</div>
+				</form>
+					</td>
+				</tr>
+			</table>
+		</section>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+<script th:inline="javascript">
+
+	function limpiar(inputN){
+		const inputs = document.getElementsByTagName('input');
+		for (let i=0;i<inputs.length;i++){
+			if(i!=inputN){
+				inputs[i].value = "";
+				}			
+		}
+	}
+
+/*<![CDATA[*/
+
+	const modal = /*[[${MODAL}]]*/ 'default';
+	if(modal){
+		var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+		myModal.show();
+	}
+	
+	function imprimir() {
+		
+    	const list = /*[[${SOCIOS}]]*/ 'default';
+    	  
+        const urlController = '/imprimirListadoSocios';
+        
+        const dataToSend = JSON.stringify(list);
+        
+       	fetch(urlController, {
+        	method: 'POST',
+        	headers: {"Content-Type": "application/json"},
+        	body: dataToSend})
+        .then(function (response) {
+	
+			if (response.status == 200) {
+				
+				document.getElementById("success-alert").className = "alert alert-success";
+				setTimeout(function(){
+					document.getElementById("success-alert").className = "visually-hidden";
+					}, 3000);
+				}
+            });
+            
+    }
+    	
+     //}
+/*]]>*/
+		
+</script>
+</html>

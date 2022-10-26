@@ -59,5 +59,20 @@ public class SociosService {
 	public List<Socios> findAllByDocumento(String palabraBusqueda, Long tipoSocio, Long estadoSocio) {
 		return this.repository.findByNumerodocumentoContainingAndTitularNotLikeAndHabilitadoNotLikeOrderByApellidoAscNombre(palabraBusqueda,tipoSocio,estadoSocio);
 	}
+
+
+	public List<Socios> buscarPorApellido(String apellido) {
+		return this.repository.findByApellidoContaining(apellido);
+	}
+
+
+	public List<Socios> buscarPorNombre(String nombre) {
+		return this.repository.findByNombreContaining(nombre);
+	}
+
+
+	public List<Socios> buscarPorDocumento(String numeroDocumento) {
+		return this.repository.findByNumerodocumentoContaining(numeroDocumento);
+	}
 	
 }

@@ -20,4 +20,9 @@ public interface SociosRepository extends JpaRepository<Socios, Long> { //EX DAO
 
 	List<Socios> findByNumerodocumentoContainingAndTitularNotLikeAndHabilitadoNotLikeOrderByApellidoAscNombre(String palabraBusqueda, Long tipoSocio, Long estadoSocio);
 	
+	List<Socios> findByApellidoContaining(String apellido);
+
+	List<Socios> findByNombreContaining(String nombre);
+
+	List<Socios> findByNumerodocumentoContaining(String numeroDocumento);
 }

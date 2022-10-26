@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import sociosclub.domain.Categorias;
 import sociosclub.domain.Socios;
 import sociosclub.enums.EnumSociosCategorias;
+import sociosclub.repository.SocioCategoriaRepository;
 import sociosclub.service.CategoriasService;
+import sociosclub.service.SocioCategoriaService;
 import sociosclub.service.SociosService;
 
 @Controller
@@ -28,7 +30,20 @@ public class SociosCategoriasController {
 	
 	@Autowired
 	private SociosService sociosService;
-		
+	
+	@Autowired
+	private SocioCategoriaService socioCategoriaService;
+	
+	@GetMapping("/hola")
+	public String hola() {
+		try {
+		this.socioCategoriaService.buscarTodos();
+		}catch (Exception e) {
+			System.out.println("hola");
+		}
+	return "hola";
+	}
+	
 	@GetMapping("/buscarUsuario")
 	public String buscarUsuario() {
 	
