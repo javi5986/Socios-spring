@@ -10,13 +10,13 @@
 </head>
 
 <body>
+
 	<div th:insert="navbar.html" role="navigation"></div>
 	<main>
 		<section class="container">
-		<div th:class="${UPDATE}?'alert alert-success alert-dismissible fade show':'alert alert-success alert-dismissible fade visually-hidden'" role="alert">
-  			<strong>Modificado con exito</strong> 
-  			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-		</div>
+		
+		<div th:insert="alertModificadoExito.html" role="alert"></div>
+		
 			<h1>Modificar Categoria</h1>
 			<form 
 				th:class="${#fields.hasErrors()} ? 'row g-3 needs-validation was-validated' : 'row g-3 needs-validation'"

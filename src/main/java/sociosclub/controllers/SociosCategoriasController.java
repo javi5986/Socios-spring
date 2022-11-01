@@ -1,5 +1,7 @@
 package sociosclub.controllers;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -12,13 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import sociosclub.domain.Categorias;
 import sociosclub.domain.Socios;
 import sociosclub.enums.EnumSociosCategorias;
-import sociosclub.repository.SocioCategoriaRepository;
 import sociosclub.service.CategoriasService;
-import sociosclub.service.SocioCategoriaService;
 import sociosclub.service.SociosService;
 
 @Controller
@@ -31,22 +32,90 @@ public class SociosCategoriasController {
 	@Autowired
 	private SociosService sociosService;
 	
-	@Autowired
-	private SocioCategoriaService socioCategoriaService;
+	//@Autowired
+//	private SocioCategoriaService socioCategoriaService;
 	
-	@GetMapping("/hola")
-	public String hola() {
-		try {
-		this.socioCategoriaService.buscarTodos();
-		}catch (Exception e) {
-			System.out.println("hola");
-		}
-	return "hola";
+	@GetMapping("/listados")
+	public ModelAndView listados() {
+		
+		List<Categorias> categorias = this.categoriasService.findAll();
+		ModelAndView model = new ModelAndView(EnumSociosCategorias.LISTADOS.getView());
+		model.addObject("CATEGORIAS", categorias);
+		return model;
 	}
 	
+	@PostMapping("/listados")
+	public String listados(
+			@RequestParam(name = "inputText", required = true) String inputText,
+			@RequestParam(name = "busquedaPor", required = true) String busquedaPor,
+			@RequestParam(name = "catSeleccionadas", required = true) Long[] idCategorias,
+			Model model
+			) {
+		// listas para enviar
+		Set<Socios> sociosToSend = new HashSet<>();
+		// realizamos la busqueda por los parametros ingresados
+		// solo socios habilitados
+		List<Socios> sociosDB = buscarPorParametros(inputText, busquedaPor, -1l, 1l);
+		
+		for (Socios socios : sociosDB) {
+
+			Set<Categorias> categorias = socios.getCategorias();
+			
+			Set<Categorias> categoriasTemp = new HashSet<>();
+			
+			for (Categorias cat : categorias) {
+				
+				
+				// comparamos las cat del socios con las ingresadas en front
+				for(Long idCat:idCategorias) {
+					
+					if(cat.getId()==idCat) {
+						categoriasTemp.add(cat);
+						//sociosToSend.add(socios);
+					}
+				}
+			}
+			if(!categoriasTemp.isEmpty()) {
+				socios.setCategorias(categoriasTemp);
+				sociosToSend.add(socios);
+			}
+		}
+		
+				
+		List<Categorias> categorias = this.categoriasService.findAll();
+		model.addAttribute("CATEGORIAS", categorias);
+		model.addAttribute("INPUTTEXT", inputText);
+		model.addAttribute("BUSQUEDAPOR", busquedaPor);
+		model.addAttribute("CHECKSELECCIONADOS", idCategorias);
+		
+		if(sociosToSend.isEmpty()) {
+			model.addAttribute("NOENCONTRADO", true);
+			return EnumSociosCategorias.LISTADOS.getView();
+		}
+		model.addAttribute("SOCIOS", sociosToSend);
+		return EnumSociosCategorias.LISTADOS.getView();
+	}
+	
+	private List<Socios> buscarPorParametros(String inputText, String busquedaPor, long l, long m) {
+		List<Socios> socios = new ArrayList<>();
+		switch (busquedaPor) {
+		case "apellido":
+			socios = this.sociosService.findAllByApellido(inputText, -1l, 0l);
+			break;
+		case "nombre":
+			socios = this.sociosService.findAllByNombre(inputText, -1l, 0l);
+			break;
+		case "numerodocumento":
+			socios = this.sociosService.findAllByDocumento(inputText, -1l, 0l);
+			break;
+		default:
+			break;
+		}
+		return socios;
+	}
+
 	@GetMapping("/buscarUsuario")
 	public String buscarUsuario() {
-	
 	return EnumSociosCategorias.BUSCARUSUARIO.getView();
 	}
 

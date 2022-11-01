@@ -1,0 +1,281 @@
+<!-- listar los cupones del sitio -->
+<!--namespaces-->
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaft.org">
+
+<head>
+	<!--incluir themes-->
+	<link rel="stylesheet" th:href="@{/css/boostrap/themes/Slate/bootstrap.css}">
+</head>
+
+<body>
+
+	<div th:insert="navbar.html" role="navigation"></div>
+	
+	<main>
+	
+		<section class="container">
+		
+			<h1>Listados de Categorias</h1>
+			
+			<div th:insert="alertBusquedaSinResultado.html" role="alert"></div>
+			
+			<div th:insert="alertReporteGenerado.html" role="navigation"></div>
+			
+			<form class="row g-3 needs-validation" 
+					th:method="POST" 
+					th:action="@{/sociosCategorias/listados}" 
+					novalidate>
+					
+				<div class="col-md-3">
+					<label for="validationCustom01" class="form-label">Ingrese su busqueda</label>
+					<input type="text" 
+							class="form-control" 
+							name="inputText" 
+							id="inputText"
+							placeholder="Escriba aqui" 
+							th:value="${INPUTTEXT}"
+							required>
+				</div>
+				
+				<div class="col-md-2">
+					<label for="validationCustom01" class="form-label">Parametro de busqueda</label>
+					<select class="form-select" 
+							name="busquedaPor" 
+							id="busquedaPor" 
+							required>
+						<option value="apellido" th:selected="apellido == ${BUSQUEDAPOR}">Apellido</option>
+						<option value="nombre" th:selected="nombre == ${BUSQUEDAPOR}">Nombre</option>
+						<option value="numerodocumento" th:selected="numerodocumento == ${BUSQUEDAPOR}">DNI</option>
+					</select>
+				</div>
+				
+				<input hidden name="catSeleccionadas" id="catSeleccionadas">
+				
+				<div class="col-md-2 pt-4">
+					<button type="button" 
+						class="btn btn-primary" 
+						data-bs-toggle="modal" 
+						data-bs-target="#exampleModal">
+  						Categorias
+					</button>
+				</div>
+				
+
+				<div class="col-md-2 pt-4">
+					<button class="btn btn-primary" 
+							type="submit">
+							Buscar
+					</button>
+				</div>
+			</form>					
+		</section>
+		
+		<div class="col-md-12"  id="filtroCategorias">
+	
+				<p id="ca">
+			
+		</div>
+		
+		<section class="container mt-5">
+			<table class="table table-striped" id="tabla">
+				
+				<tr>
+					<th>ID</th>
+					<th>Apellido</th>
+					<th>Nombre</th>
+					<th>Documento</th>
+					<th>Categorias</th>
+				</tr>
+				<!-- rows -->
+				<tr th:each="socio : ${SOCIOS}">
+
+					<td th:text="${socio.id}"></td>
+					<td th:text="${socio.apellido}"></td>
+					<td th:text="${socio.nombre}"></td>
+					<td th:text="${socio.numerodocumento}"></td>
+					<td> 
+						<table class="table table-striped" bordercolor="black">
+							<tr th:each="categoria : ${socio.categorias}">
+            					<td th:text="${categoria.nombre}"></td>
+							</tr>
+        				</table>
+					</td>
+				</tr>
+			</table>
+				<div>
+						
+					<button class="btn btn-primary btn-md" 
+					th:onclick="imprimir()" th:disabled="${#lists.isEmpty(SOCIOS)}">Exportar a PDF</button>
+				</div>
+			
+		</section>
+	</main>
+<!-- Modal -->
+<div class="modal fade modal-md" 
+	id="exampleModal" 
+	data-bs-backdrop="static" 
+	data-bs-keyboard="false" 
+	tabindex="-1" 
+	aria-labelledby="staticBackdropLabel" 
+	aria-hidden="true">
+	
+  	<div class="modal-dialog">
+  	
+	    <div class="modal-content">
+	    
+    	  	<div class="modal-header">
+    	  	
+	        	<h5 class="modal-title" id="exampleModalLabel">Seleccionar Categorias</h5>
+	        	
+    	    	<button type="button" 
+    	    			class="btn-close" 
+    	    			data-bs-dismiss="modal" 
+    	    			aria-label="Cerrar">
+    	    	</button>
+      		</div>
+      		
+      		<div class="modal-body modal-dialog-scrollable">
+      		
+	        	<section class="container mt-5">
+	        	
+					<table class="table table-striped" id="tabla">
+				
+						<tr>
+							<th>
+								<div class="form-check">
+  									<input class="form-check-input" 
+  											type="checkbox" 
+  											id="chechAll"
+  											onclick="todasLasCategorias()">Todas
+								</div>
+								
+							</th>
+							<th>ID</th>
+							<th>NOMBRE</th>
+						</tr>
+						<!-- rows -->
+						<tr th:each="categorias : ${CATEGORIAS}">
+		
+							<td>
+								<div class="form-check">
+  									<input class="form-check-input cat" 
+  											type="checkbox" 
+  											th:value="${categorias.id}" 
+  											id="flexCheckDefault">
+								</div>
+							</td>
+							<td th:text="${categorias.id}"></td>
+							<td th:text="${categorias.nombre}"></td>
+							
+						</tr>
+					</table>
+				</section>
+     		</div>
+     		
+      		<div class="modal-footer">
+      		
+        		<button type="button" 
+        			class="btn btn-secondary" 
+        			data-bs-dismiss="modal"
+        			onclick="categoriasSeleccionadas()">
+        			Aceptar
+        		</button>
+      		</div>
+    	</div>
+  	</div>
+</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+	
+<script>
+	function categoriasSeleccionadas(){
+		const cat = document.getElementsByClassName("cat");
+		const brenda = [];
+		for(categoria of cat){
+			if(categoria.checked){
+				brenda.push(categoria.value);
+			}
+		}
+		document.getElementById("catSeleccionadas").value = brenda;
+		mostrarDivFiltro(brenda);
+	}
+	
+	function mostrarDivFiltro(id){
+		const div = document.getElementById("filtroCategorias");
+		//document.createElement
+	}
+	
+	function todasLasCategorias(){
+		const catAll = document.getElementById("chechAll");
+		const cat = document.getElementsByClassName("cat");
+		if(catAll.checked){
+			for(categoria of cat){
+			categoria.checked = true;
+			}
+		}else{
+			for(categoria of cat){
+			categoria.checked = false;
+			}
+		}
+		
+	}
+	function confCheckBusqueda(id){
+		const cat = document.getElementsByClassName("cat");
+		for(categoria of cat){
+			for(let i=0;i<id.length;i++){
+				if(categoria.value==id[i]){
+					categoria.checked=true;
+				}
+				
+			}
+		}
+		console.log(cat);
+	}
+</script>
+<script th:inline="javascript">
+
+	function mostrarCategorias(listCat){
+		console.log(listCat);
+		console.log(listCat);
+	}
+	const checks = /*[[${CHECKSELECCIONADOS}]]*/"";
+	if(checks!=null){
+		confCheckBusqueda(checks);
+		
+	}
+	function imprimir() {
+		
+    	const list = /*[[${SOCIOS}]]*/"";
+    	  
+        const urlController = '/imprimirListadoSocios';
+        
+        const dataToSend = JSON.stringify(list);
+        
+       	fetch(urlController, {
+        	method: 'POST',
+        	headers: {"Content-Type": "application/json"},
+        	body: dataToSend})
+        .then(function (response) {
+	
+			if (response.status == 200) {
+				
+				document.getElementById("success-alert").className = "alert alert-success";
+				setTimeout(function(){
+					document.getElementById("success-alert").className = "visually-hidden";
+					}, 3000);
+				}
+            });
+            
+    }
+    	
+		
+</script>
+<script>
+		
+		document.getElementById("inputText").focus();		
+</script>
+</html>

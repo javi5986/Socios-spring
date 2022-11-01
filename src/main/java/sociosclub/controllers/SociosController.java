@@ -124,15 +124,16 @@ public class SociosController {
 			@ModelAttribute(name = "SOCIO") Socios socio,
 			BindingResult result
 			) {
-		ModelAndView model = new ModelAndView();
+		ModelAndView model = new ModelAndView(EnumSocios.EDITAR.getView());
 		if (result.hasErrors()) {
-			model.setViewName(EnumSocios.EDITAR.getView());
+			return model;
 		}
-
 		else {
+			if(socio.getHabilitado()==0) {
+				socio.setCategorias(null);
+			}
 			this.sociosService.alta(socio);
-			model.addObject("SUCCESS", true);
-			model.setViewName(EnumSocios.EDITAR.getView());
+			model.addObject("UPDATE", true);
 		}
 		return model;
 	}

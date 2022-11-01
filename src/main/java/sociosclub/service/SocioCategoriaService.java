@@ -1,5 +1,6 @@
 package sociosclub.service;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,10 @@ public class SocioCategoriaService {
 	public List<SocioCategoria> buscarTodos() {
 
 		return this.repository.findAll();
+	}
+
+	public Collection<? extends SocioCategoria> findByCategoria(Long idCat) {
+		return this.repository.findByIdCategoria(idCat);
 	}
 	
 }

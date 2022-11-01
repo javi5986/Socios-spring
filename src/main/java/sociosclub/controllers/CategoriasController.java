@@ -72,7 +72,7 @@ public class CategoriasController {
 		
 		try {
 			Categorias newCategoria  = this.categoriasService.crear(categoria);
-			model.addObject("CREATE", true);
+			model.addObject("SUCCESS", true);
 			model.addObject("CATEGORIA",newCategoria);
 		}catch (DataIntegrityViolationException e) {
 			if(e.getCause() instanceof ConstraintViolationException){

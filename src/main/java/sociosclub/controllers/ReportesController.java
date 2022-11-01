@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,14 +34,17 @@ public class ReportesController {
 	@SuppressWarnings("rawtypes")
 	@PostMapping(value = "/imprimirListadoSocios", consumes = "application/json")
 	public ResponseEntity imprimirListadoSocios(
-			@RequestBody List<Socios> listSocios) throws JRException, IOException {
+			@RequestBody List<Socios> listSocios) {
 
 		String nombreReporte = "ListadoSocios";
 		
 		JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listSocios);
 		
-		generarPdf(nombreReporte,itemsJRBean);
-
+		try {
+			generarReportes(nombreReporte,itemsJRBean);
+		}catch (Exception e) {
+			return ResponseEntity.internalServerError().build();
+		}
 		return ResponseEntity.ok().build();
 		
 	}
@@ -54,24 +56,19 @@ public class ReportesController {
 
 		String nombreReporte = "ReporteSocio";
 		
-		List<Socios> listToSend = new ArrayList<>();
-		listToSend.add(socio);
-		
-		JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listToSend);
-		
-		generarPdf(nombreReporte,itemsJRBean);
-
+		try {
+			generarReportes(nombreReporte,socio);
+		}catch (Exception e) {
+			return ResponseEntity.internalServerError().build();
+		}
 		return ResponseEntity.ok().build();
-		
 	}
 	
-
-	private void generarPdf(String nombreReporte, JRBeanCollectionDataSource itemsJRBean ) throws JRException, IOException {
-
+	private void generarReportes(String nombreReporte, Object dataToPrint ) throws JRException, IOException {
 		
 		HashMap<String, Object> parameters = new HashMap<>();
 
-		parameters.put("CollectionParams", itemsJRBean);
+		parameters.put("parametros", dataToPrint);
 
 		File file = new File(pathReporte + nombreReporte+".jrxml");
 		
@@ -114,9 +111,8 @@ public class ReportesController {
 		OutputStream os = new FileOutputStream(file1);
 		os.write(pdfReport);
 		os.close();
-
 	}
-
+}
 	/*
 	 * @PostMapping("/pdf") public void pdf(@ModelAttribute(name = "SOCIOS")
 	 * List<Socios> socios, HttpServletResponse response) throws JRException,
@@ -160,7 +156,7 @@ public class ReportesController {
 	 * }
 	 */
 
-}
+
 
 /*
  * JRBeanCollectionDataSource itemsJRBean = new

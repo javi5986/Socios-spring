@@ -4,7 +4,8 @@ public enum EnumSociosCategorias {
 
 	BUSCARUSUARIO("/sociosCategorias/buscarUsuario"),
 	SELECCIONARCATEGORIA("/sociosCategorias/seleccionarCategoria"),
-	REDIRECT_SELECCIONARCATEGORIA("redirect:/sociosCategorias/seleccionarCategoria");
+	REDIRECT_SELECCIONARCATEGORIA("redirect:/sociosCategorias/seleccionarCategoria"),
+	LISTADOS("/sociosCategorias/listados");
 
 	private String view;
 	

@@ -1,17 +1,12 @@
 package sociosclub.controllers;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,25 +14,22 @@ import org.springframework.web.servlet.ModelAndView;
 
 import sociosclub.domain.Categorias;
 import sociosclub.domain.Cuotas;
-import sociosclub.domain.SocioCategoria;
 import sociosclub.domain.Socios;
-import sociosclub.service.CategoriasService;
 import sociosclub.service.CuotasService;
-import sociosclub.service.SocioCategoriaService;
 import sociosclub.service.SociosService;
 
 @Controller
 @RequestMapping("/cuotas")
 public class CuotasController {
 
-	@Autowired
-	private CategoriasService categoriasService;
+	//@Autowired
+	//private CategoriasService categoriasService;
 
 	@Autowired
 	private SociosService socioService;
 
-	@Autowired
-	private SocioCategoriaService socioCategoriaService;
+	//@Autowired
+	//private SocioCategoriaService socioCategoriaService;
 
 	@Autowired
 	private CuotasService cuotasService;

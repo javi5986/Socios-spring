@@ -34,6 +34,7 @@ public class Socios {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;	
 	
 	@Column(nullable = false,length = 50,name="nombre")

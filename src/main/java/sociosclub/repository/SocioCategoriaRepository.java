@@ -15,4 +15,5 @@ import sociosclub.domain.SocioCategoriaPK;
  */
 public interface SocioCategoriaRepository extends JpaRepository<SocioCategoria, SocioCategoriaPK>{
 
+	List<SocioCategoria> findByIdCategoria(Long idCategoria);
 }

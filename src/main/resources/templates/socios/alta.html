@@ -12,20 +12,19 @@
 	<div th:insert="navbar.html" role="navigation"></div>
 	<main>
 		<section class="container">
-			<div th:class="${SUCCESS}?'alert alert-success alert-dismissible fade show':'alert alert-success alert-dismissible fade visually-hidden'"
-				role="alert">
-				<strong>Guardado con exito</strong>
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			</div>
+		
+			<h1>Alta Socios</h1>
+			
+			<div th:insert="alertGuardadoExito.html" role="alert"></div>
+			
 			<div th:class="${DUPLICATE}?'alert alert-danger alert-dismissible fade show':'alert alert-success alert-dismissible fade visually-hidden'"
 				role="alert">
 				<strong>Nº DOCUMENTO DUPLICADO </strong> El numero de documento que intenta guardar ya existe
 				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 			</div>
-			<div class="visually-hidden" id="success-alert">
-  				<strong>Reporte generado! </strong> Archivo guardado en Escritorio
-			</div>
-			<h1>Alta Socios</h1>
+			
+			<div th:insert="alertReporteGenerado.html" role="navigation"></div>
+			
 			<form
 				th:class="${#fields.hasErrors()} ? 'row g-3 needs-validation was-validated' : 'row needs-validation g-3'"
 				novalidate th:object="${SOCIO}" action="#" th:action="@{/socio/alta}" th:method="POST">
@@ -99,7 +98,7 @@
 				</div>
 				<div class="col-md-4">
 					<label for="validationCustom02" class="form-label">Telefono</label>
-					<input type="text" class="form-control" id="telefono" maxlength="15" value=""
+					<input type="text" class="form-control" id="telefono" maxlength="10" value=""
 						th:field="*{telefono}" >
 					<div class="valid-feedback">
 						Ok!
@@ -150,7 +149,7 @@
 					<button id="btn-alta" class="btn btn-primary" type="submit">ALTA</button>
 					<a id="btn-imprimir" class="btn btn-primary btn-md" 
 					th:onclick="imprimir()" >IMPRIMIR</a>
-										<a class="btn btn-primary" th:href="@{/}">VOLVER</a>
+					<a class="btn btn-primary" th:href="@{/}">VOLVER</a>
 				</div>
 			</form>
 		</section>
